@@ -8,14 +8,21 @@ import Login from './views/Login';
 import Logout from './views/Logout';
 import {MediaProvider} from './contexts/MediaContext';
 import {Container} from '@material-ui/core';
+import useWindowDimensions from './hooks/useWindowDimensions';
 
 const App = () => {
+  const {height} = useWindowDimensions();
+  const heightCorrected = height - 65;
+
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <MediaProvider>
-        <Container maxWidth="md">
+        <Container
+          maxWidth="xl"
+          style={{margin: 0, padding: 0, height: heightCorrected}}
+        >
           <Nav />
-          <main style={{marginTop: 80}}>
+          <main style={{marginTop: 65, height: '100%'}}>
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/login" component={Login} />
