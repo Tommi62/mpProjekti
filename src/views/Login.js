@@ -12,7 +12,7 @@ const Login = () => {
 
   return (
     <>
-      { toggle ? <LoginForm /> : <RegisterForm setToggle={setToggle} />}
+      {toggle ? <LoginForm /> : <RegisterForm setToggle={setToggle} />}
       <Button onClick={showHide}>{toggle ? 'or register' : 'or login'}</Button>
     </>
   );

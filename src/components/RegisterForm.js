@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable indent */
 import useForm from '../hooks/FormHooks';
 import {useUsers} from '../hooks/ApiHooks';
@@ -63,21 +64,20 @@ const RegisterForm = ({setToggle}) => {
       }
     });
 
-    ValidatorForm.addValidationRule('isPasswordMatch',
-      (value) => (value === inputs.password),
+    ValidatorForm.addValidationRule(
+      'isPasswordMatch',
+      (value) => value === inputs.password
     );
   }, [inputs]);
-
 
   // console.log('RegisterForm', inputs);
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography
-          component="h1"
-          variant="h2"
-          gutterBottom>Register</Typography>
+        <Typography component="h1" variant="h2" gutterBottom>
+          Register
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <ValidatorForm onSubmit={handleSubmit}>
@@ -135,10 +135,12 @@ const RegisterForm = ({setToggle}) => {
             </Grid>
 
             <Grid container item>
-              <Button fullWidth
+              <Button
+                fullWidth
                 color="primary"
                 type="submit"
-                variant="contained">
+                variant="contained"
+              >
                 Register
               </Button>
             </Grid>

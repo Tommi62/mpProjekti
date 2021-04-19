@@ -32,10 +32,9 @@ const LoginForm = ({history}) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography
-          component="h1"
-          variant="h2"
-          gutterBottom>Login</Typography>
+        <Typography component="h1" variant="h2" gutterBottom>
+          Login
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <form onSubmit={handleSubmit}>
@@ -66,7 +65,8 @@ const LoginForm = ({history}) => {
                 fullWidth
                 color="primary"
                 type="submit"
-                variant="contained">
+                variant="contained"
+              >
                 Login
               </Button>
             </Grid>
@@ -80,6 +80,5 @@ const LoginForm = ({history}) => {
 LoginForm.propTypes = {
   history: PropTypes.object,
 };
-
 
 export default withRouter(LoginForm);
