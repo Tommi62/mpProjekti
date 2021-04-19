@@ -7,7 +7,8 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemIcon, ListItemText,
+  ListItemIcon,
+  ListItemText,
   Typography,
 } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
@@ -45,11 +46,10 @@ const Profile = () => {
   return (
     <>
       <BackButton />
-      <Typography
-        component="h1"
-        variant="h2"
-        gutterBottom>Profile</Typography>
-      {user &&
+      <Typography component="h1" variant="h2" gutterBottom>
+        Profile
+      </Typography>
+      {user && (
         <Card>
           <CardContent>
             <List>
@@ -68,26 +68,30 @@ const Profile = () => {
                 </ListItemIcon>
                 <ListItemText primary="My files" />
               </ListItem>
-              <ListItem button onClick={() => {
-                setToggleForm(!toggleForm);
-              }}>
+              <ListItem
+                button
+                onClick={() => {
+                  setToggleForm(!toggleForm);
+                }}
+              >
                 <ListItemIcon>
                   <CreateIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary=
-                  {toggleForm ? 'Close update profile' : 'Update profile'}
+                  primary={
+                    toggleForm ? 'Close update profile' : 'Update profile'
+                  }
                 />
               </ListItem>
             </List>
           </CardContent>
         </Card>
-      }
-      {toggleForm &&
+      )}
+      {toggleForm && (
         <Grid>
           <ProfileForm user={user} setUser={setUser} setUpdate={setUpdate} />
         </Grid>
-      }
+      )}
     </>
   );
 };

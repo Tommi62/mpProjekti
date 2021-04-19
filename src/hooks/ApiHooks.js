@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable indent */
 /* eslint-disable max-len */
 import {baseUrl} from '../utils/variables';
 
@@ -132,9 +134,11 @@ const useMedia = (update = false, ownFiles) => {
       setLoading(true);
       const files = await doFetch(baseUrl + 'tags/' + appIdentifier);
       // console.log(files);
-      let allFiles = await Promise.all(files.map(async (item) => {
-        return await doFetch(baseUrl + 'media/' + item.file_id);
-      }));
+      let allFiles = await Promise.all(
+        files.map(async (item) => {
+          return await doFetch(baseUrl + 'media/' + item.file_id);
+        })
+      );
       if (ownFiles && user !== null) {
         allFiles = allFiles.filter((item) => {
           return item.user_id === user.user_id;
@@ -243,4 +247,3 @@ const useTag = () => {
 };
 
 export {useLogin, useUsers, useMedia, useTag};
-

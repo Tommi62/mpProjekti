@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable indent */
 import {useUsers} from '../hooks/ApiHooks';
 import {Grid, Typography, Button} from '@material-ui/core';
@@ -48,30 +49,30 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
     }
   };
 
-  const {inputs, setInputs, handleInputChange, handleSubmit} =
-    useForm(doRegister, user);
+  const {inputs, setInputs, handleInputChange, handleSubmit} = useForm(
+    doRegister,
+    user
+  );
 
   useEffect(() => {
-    ValidatorForm.addValidationRule('isPasswordMatch',
-      (value) => (value === inputs.password),
+    ValidatorForm.addValidationRule(
+      'isPasswordMatch',
+      (value) => value === inputs.password
     );
   }, [inputs]);
-
 
   // console.log('RegisterForm', inputs);
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography
-          component="h1"
-          variant="h4"
-          gutterBottom>Update profile</Typography>
+        <Typography component="h1" variant="h4" gutterBottom>
+          Update profile
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <ValidatorForm onSubmit={handleSubmit}>
           <Grid container>
-
             <Grid item xs={12}>
               <TextValidator
                 fullWidth
@@ -112,10 +113,12 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
             </Grid>
 
             <Grid item xs={12}>
-              <Button fullWidth
+              <Button
+                fullWidth
                 color="primary"
                 type="submit"
-                variant="contained">
+                variant="contained"
+              >
                 Update
               </Button>
             </Grid>
