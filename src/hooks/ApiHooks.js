@@ -108,5 +108,139 @@ const useLogin = () => {
   return {postLogin};
 };
 
-export {useLogin, useUsers};
+// set update to true, if you want to use getMedia automagically
+const useMedia = (update = false, ownFiles) => {
+  const [picArray, setPicArray] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [user] = useContext(MediaContext);
+
+  if (update) {
+    useEffect(() => {
+      try {
+        (async () => {
+          const media = await getMedia();
+          setPicArray(media);
+        })();
+      } catch (e) {
+        alert(e.message);
+      }
+    }, []);
+  }
+
+  const getMedia = async () => {
+    try {
+      setLoading(true);
+      const files = await doFetch(baseUrl + 'tags/' + appIdentifier);
+      // console.log(files);
+      let allFiles = await Promise.all(files.map(async (item) => {
+        return await doFetch(baseUrl + 'media/' + item.file_id);
+      }));
+      if (ownFiles && user !== null) {
+        allFiles = allFiles.filter((item) => {
+          return item.user_id === user.user_id;
+        });
+      }
+      return allFiles;
+    } catch (e) {
+      throw new Error(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const postMedia = async (fd, token) => {
+    setLoading(true);
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+      },
+      body: fd,
+    };
+    try {
+      return await doFetch(baseUrl + 'media', fetchOptions);
+    } catch (e) {
+      throw new Error('upload failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const putMedia = async (data, id, token) => {
+    setLoading(true);
+    const fetchOptions = {
+      method: 'PUT',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    try {
+      return await doFetch(baseUrl + 'media/' + id, fetchOptions);
+    } catch (e) {
+      throw new Error('modify failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteMedia = async (id, token) => {
+    setLoading(true);
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    try {
+      const resp = await doFetch(baseUrl + 'media/' + id, fetchOptions);
+      if (resp) {
+        const media = await getMedia();
+        setPicArray(media);
+      }
+    } catch (e) {
+      throw new Error('delete failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {getMedia, postMedia, putMedia, deleteMedia, loading, picArray};
+};
+
+const useTag = () => {
+  const postTag = async (token, id, tag = appIdentifier) => {
+    const data = {
+      file_id: id,
+      tag,
+    };
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    try {
+      return await doFetch(baseUrl + 'tags', fetchOptions);
+    } catch (e) {
+      throw new Error('tagging failed');
+    }
+  };
+
+  const getTag = async (tag) => {
+    try {
+      const response = await doFetch(baseUrl + 'tags/' + tag);
+      return response;
+    } catch (e) {
+      alert(e.message);
+    }
+  };
+
+  return {postTag, getTag};
+};
+
+export {useLogin, useUsers, useMedia, useTag};
 
