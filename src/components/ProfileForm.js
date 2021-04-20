@@ -125,6 +125,10 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
             </Grid>
 
             <Grid item xs={12}>
+              <Typography
+                component="h4"
+                variant="h6"
+                gutterBottom>Update profile picture</Typography>
               <TextValidator
                 fullWidth
                 type="file"
