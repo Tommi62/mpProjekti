@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
+import {useEffect, useState, useContext} from 'react';
 import {baseUrl} from '../utils/variables';
+import {MediaContext} from '../contexts/MediaContext';
 
 // general function for fetching (options default value is empty object)
 const doFetch = async (url, options = {}) => {

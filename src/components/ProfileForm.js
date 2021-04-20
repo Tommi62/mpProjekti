@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import {useUsers} from '../hooks/ApiHooks';
+import {useMedia, useTag, useUsers} from '../hooks/ApiHooks';
 import {Grid, Typography, Button} from '@material-ui/core';
 // import {useState} from 'react';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
@@ -9,6 +9,8 @@ import useForm from '../hooks/FormHooks';
 
 const ProfileForm = ({user, setUser, setUpdate}) => {
   const {putUser, getUser} = useUsers();
+  const {postMedia} = useMedia();
+  const {postTag} = useTag();
 
   const validators = {
     confirm: ['isPasswordMatch'],
@@ -27,6 +29,17 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
         const fd = new FormData();
         fd.append('title', inputs.username);
         fd.append('file', inputs.file);
+        const fileResult = await postMedia(fd, localStorage.getItem('token'));
+        const tagResult = await postTag(
+          localStorage.getItem('token'),
+          fileResult.file_id,
+          'avatar_' + user.user_id,
+        );
+        console.log(fileResult, tagResult);
+        if (fileResult) {
+          alert(tagResult.message);
+          setUpdate(true);
+        }
       }
       delete inputs.confirm;
       delete inputs.file;
@@ -48,7 +61,7 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
     }
   };
 
-  const {inputs, setInputs, handleInputChange, handleSubmit} =
+  const {inputs, setInputs, handleInputChange, handleSubmit, handleFileChange} =
     useForm(doRegister, user);
 
   useEffect(() => {
@@ -108,6 +121,16 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
                 value={inputs?.email}
                 validators={validators.email}
                 errorMessages={errorMessages.email}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextValidator
+                fullWidth
+                type="file"
+                name="file"
+                accept="image/*"
+                onChange={handleFileChange}
               />
             </Grid>
 

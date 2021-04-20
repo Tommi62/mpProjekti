@@ -2,18 +2,18 @@
 import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 import {
+  Avatar,
   Card,
   CardContent,
   Grid,
   List,
-  ListItem,
+  ListItem, ListItemAvatar,
   ListItemIcon, ListItemText,
   Typography,
 } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';
 import BackButton from '../components/BackButton';
-import {Link as RouterLink} from 'react-router-dom';
 import ProfileForm from '../components/ProfileForm';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
@@ -21,7 +21,7 @@ import CreateIcon from '@material-ui/icons/Create';
 
 const Profile = () => {
   const [user, setUser] = useContext(MediaContext);
-  const [avatar, setAvatar] = useState('logo512.png');
+  const [avatar, setAvatar] = useState(PersonIcon);
   const [update, setUpdate] = useState(false);
   const [toggleForm, setToggleForm] = useState(false);
   const {getTag} = useTag();
@@ -54,6 +54,9 @@ const Profile = () => {
           <CardContent>
             <List>
               <ListItem>
+                <ListItemAvatar>
+                  <Avatar variant={'square'} src={avatar} />
+                </ListItemAvatar>
                 <ListItemText primary={user.username} />
               </ListItem>
               <ListItem>
@@ -61,12 +64,6 @@ const Profile = () => {
                   <EmailIcon />
                 </ListItemIcon>
                 <ListItemText primary={user.email} />
-              </ListItem>
-              <ListItem component={RouterLink} to="/myfiles">
-                <ListItemIcon>
-                  <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary="My files" />
               </ListItem>
               <ListItem button onClick={() => {
                 setToggleForm(!toggleForm);
