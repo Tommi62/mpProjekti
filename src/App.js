@@ -8,7 +8,7 @@ import Login from './views/Login';
 import Logout from './views/Logout';
 import {MediaProvider} from './contexts/MediaContext';
 import {Container} from '@material-ui/core';
-import useWindowDimensions from './hooks/useWindowDimensions';
+import useWindowDimensions from './hooks/WindowDimensionsHook';
 
 const App = () => {
   const {height} = useWindowDimensions();

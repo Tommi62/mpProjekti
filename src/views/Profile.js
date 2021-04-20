@@ -45,11 +45,10 @@ const Profile = () => {
   return (
     <>
       <BackButton />
-      <Typography
-        component="h1"
-        variant="h2"
-        gutterBottom>Profile</Typography>
-      {user &&
+      <Typography component="h1" variant="h2" gutterBottom>
+        Profile
+      </Typography>
+      {user && (
         <Card>
           <CardContent>
             <List>
@@ -72,19 +71,20 @@ const Profile = () => {
                   <CreateIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary=
-                  {toggleForm ? 'Close update profile' : 'Update profile'}
+                  primary={
+                    toggleForm ? 'Close update profile' : 'Update profile'
+                  }
                 />
               </ListItem>
             </List>
           </CardContent>
         </Card>
-      }
-      {toggleForm &&
+      )}
+      {toggleForm && (
         <Grid>
           <ProfileForm user={user} setUser={setUser} setUpdate={setUpdate} />
         </Grid>
-      }
+      )}
     </>
   );
 };

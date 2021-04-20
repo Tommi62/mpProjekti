@@ -4,7 +4,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {Button} from '@material-ui/core';
 import {withRouter} from 'react-router-dom';
 
-
 const BackButton = ({history}) => {
   return (
     <Button
@@ -17,7 +16,6 @@ const BackButton = ({history}) => {
     </Button>
   );
 };
-
 
 BackButton.propTypes = {
   history: PropTypes.object,
