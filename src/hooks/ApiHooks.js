@@ -1,7 +1,9 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-import {baseUrl} from '../utils/variables';
+import {useContext, useEffect, useState} from 'react';
+import {MediaContext} from '../contexts/MediaContext';
+import {appIdentifier, baseUrl, getCoordsUrl} from '../utils/variables';
 
 // general function for fetching (options default value is empty object)
 const doFetch = async (url, options = {}) => {
@@ -246,4 +248,16 @@ const useTag = () => {
   return {postTag, getTag};
 };
 
-export {useLogin, useUsers, useMedia, useTag};
+const useCoordinates = () => {
+  const getCoordinates = async (address, city) => {
+    try {
+      const response = await doFetch(getCoordsUrl + address + '+' + city);
+      return response;
+    } catch (e) {
+      alert(e.message);
+    }
+  };
+  return {getCoordinates};
+};
+
+export {useLogin, useUsers, useMedia, useTag, useCoordinates};

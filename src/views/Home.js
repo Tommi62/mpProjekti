@@ -1,4 +1,5 @@
-import {Typography, Grid} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
+import AddPlaceForm from '../components/AddPlaceForm';
 import Map from '../components/Map';
 
 const Home = () => {
@@ -6,9 +7,7 @@ const Home = () => {
     <>
       <Grid container style={{height: '100%'}}>
         <Grid item xs={3}>
-          <Typography component="h1" variant="h2" gutterBottom align="center">
-            Home
-          </Typography>
+          <AddPlaceForm />
         </Grid>
         <Grid item xs={9}>
           <Map />
