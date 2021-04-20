@@ -1,5 +1,7 @@
 import {Link as RouterLink} from 'react-router-dom';
-import {useState} from 'react';
+import {useEffect, useContext, useState} from 'react';
+import {useUsers} from '../hooks/ApiHooks';
+import {MediaContext} from '../contexts/MediaContext';
 import {
   AppBar,
   IconButton,
@@ -33,11 +35,27 @@ const useStyles = makeStyles((theme) => ({
 
 const Nav = () => {
   const classes = useStyles();
+  const [user, setUser] = useContext(MediaContext);
   const [open, setOpen] = useState(false);
+  const {getUser} = useUsers();
 
   const toggleDrawer = (opener) => () => {
     setOpen(opener);
   };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const userData = await getUser(token);
+        setUser(userData);
+      } catch (e) {
+        // console.log('logged out.');
+      }
+    };
+
+    checkUser();
+  }, []);
 
   return (
     <>
@@ -57,22 +75,25 @@ const Nav = () => {
               Home
             </Link>
           </Typography>
-          <Button
-            color="inherit"
-            startIcon={<ExitToAppIcon />}
-            component={RouterLink}
-            to="/logout"
-          >
-            Logout
-          </Button>
-          <Button
-            color="inherit"
-            startIcon={<ExitToAppIcon />}
-            component={RouterLink}
-            to="/login"
-          >
-            Login
-          </Button>
+          {user ? (
+            <Button
+              color="inherit"
+              startIcon={<ExitToAppIcon />}
+              component={RouterLink}
+              to="/logout"
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button
+              color="inherit"
+              startIcon={<ExitToAppIcon />}
+              component={RouterLink}
+              to="/login"
+            >
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer open={open} onClose={toggleDrawer(false)}>
@@ -89,17 +110,21 @@ const Nav = () => {
             <ListItemText primary="Home" />
           </ListItem>
           <>
-            <ListItem
-              button
-              component={RouterLink}
-              onClick={toggleDrawer(false)}
-              to="/profile"
-            >
-              <ListItemIcon>
-                <AccountBoxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Profile" />
-            </ListItem>
+            {user && (
+              <>
+                <ListItem
+                  button
+                  component={RouterLink}
+                  onClick={toggleDrawer(false)}
+                  to="/profile"
+                >
+                  <ListItemIcon>
+                    <AccountBoxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Profile" />
+                </ListItem>
+              </>
+            )}
           </>
         </List>
       </Drawer>
