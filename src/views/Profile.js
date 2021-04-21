@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
+import MediaTable from '../components/MediaTable';
 import {
   Avatar,
   Card,
@@ -90,6 +91,7 @@ const Profile = () => {
           <ProfileForm user={user} setUser={setUser} setUpdate={setUpdate} />
         </Grid>
       )}
+      <MediaTable ownFiles={true} />
     </>
   );
 };
