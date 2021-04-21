@@ -11,8 +11,10 @@ import {
 import * as L from 'leaflet';
 import Search from './Search';
 import {OpenStreetMapProvider} from 'react-leaflet-geosearch';
+import MapMarkers from './MapMarkers';
+import PropTypes from 'prop-types';
 
-const Map = () => {
+const Map = (props) => {
   const LeafIcon = L.Icon.extend({
     options: {},
   });
@@ -74,9 +76,15 @@ const Map = () => {
           searchLabel={'Enter address, please'}
           keepResult={false}
         />
+        <MapMarkers value={props.value} onChange={props.onChange} />
       </MapContainer>
     </>
   );
+};
+
+Map.propTypes = {
+  value: PropTypes.object,
+  onChange: PropTypes.func,
 };
 
 export default Map;

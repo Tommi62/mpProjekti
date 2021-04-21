@@ -1,9 +1,10 @@
 import {Grid} from '@material-ui/core';
-import AddPlaceForm from '../components/AddPlaceForm';
+// import AddPlaceForm from '../components/AddPlaceForm';
 import Map from '../components/Map';
-import {useEffect, useContext} from 'react';
+import {useEffect, useContext, useState} from 'react';
 import {useUsers} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
+import PlaceInfo from '../components/PlaceInfo';
 
 const Home = () => {
   const [user, setUser] = useContext(MediaContext);
@@ -23,18 +24,40 @@ const Home = () => {
     checkUser();
   }, []);
 
+  const [value, setValue] = useState({
+    title: '',
+    description: {
+      description: '',
+      address: '',
+      city: '',
+    },
+    file: '',
+  });
+
+  const handleChange = (newValue) => {
+    setValue({
+      title: newValue.title,
+      description: {
+        description: JSON.parse(newValue.description).description,
+        address: JSON.parse(newValue.description).address,
+        city: JSON.parse(newValue.description).city,
+      },
+      file: newValue.filename,
+    });
+  };
+  console.log('value', value);
   return (
     <>
       <Grid container style={{height: '100%'}}>
         <Grid item xs={3}>
           {user && (
             <>
-              <AddPlaceForm />
+              <PlaceInfo data={value} />
             </>
           )}
         </Grid>
         <Grid item xs={9}>
-          <Map />
+          <Map value={value} onChange={handleChange} />
         </Grid>
       </Grid>
     </>
