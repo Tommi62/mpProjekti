@@ -16,29 +16,21 @@ const MediaRow = ({file, ownFiles, history, deleteMedia}) => {
 
   return (
     <>
-      <img
-        src={uploadsUrl + file.thumbnails?.w320}
-        alt={file.title}
-      />
+      <img src={uploadsUrl + file.thumbnails?.w320} alt={file.title} />
       <GridListTileBar
         title={file.title}
         subtitle={ownFiles || desc.description}
         actionIcon={
           <>
-            {ownFiles &&
+            {ownFiles && (
               <>
-                <ProfileModal
-                  post={file}
-                >
-                </ProfileModal>
+                <ProfileModal post={file}></ProfileModal>
               </>
-            }
+            )}
           </>
         }
       />
-      <>
-
-      </>
+      <></>
     </>
   );
 };

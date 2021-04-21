@@ -18,7 +18,6 @@ import {Link as RouterLink} from 'react-router-dom';
 import {useMedia} from '../hooks/ApiHooks';
 import {withRouter} from 'react-router-dom';
 
-
 const useStyles = makeStyles({
   root: {
     position: 'absolute',
@@ -36,7 +35,6 @@ const useStyles = makeStyles({
     marginBottom: '10px',
   },
 });
-
 
 const ProfileModal = ({post, history}) => {
   const {deleteMedia} = useMedia(true, post);
@@ -78,8 +76,16 @@ const ProfileModal = ({post, history}) => {
                 <Typography gutterBottom variant="h5" component="h2">
                   {post.title}
                 </Typography>
-                <Typography variant="body1" color="textSecondary" component="p" className={classes.address}>
-                  {JSON.parse(post.description).address + ', ' + JSON.parse(post.description).city + '.'}
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.address}
+                >
+                  {JSON.parse(post.description).address +
+                    ', ' +
+                    JSON.parse(post.description).city +
+                    '.'}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {JSON.parse(post.description).description}

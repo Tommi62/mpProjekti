@@ -3,12 +3,12 @@ import {useMedia} from '../hooks/ApiHooks';
 import {
   CircularProgress,
   GridList,
-  GridListTile, ListSubheader,
+  GridListTile,
+  ListSubheader,
   makeStyles,
   useMediaQuery,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,23 +40,26 @@ const MediaTable = ({ownFiles}) => {
       <GridList
         cellHeight={180}
         className={classes.gridList}
-        cols={matches ? 6 : 2}>
+        cols={matches ? 6 : 2}
+      >
         <GridListTile key="Subheader" cols={6} style={{height: 'auto'}}>
           <ListSubheader component="div">All Media</ListSubheader>
         </GridListTile>
-        {!loading ?
-          picArray.map((item) =>
+        {!loading ? (
+          picArray.map((item) => (
             <GridListTile key={item.file_id}>
               <MediaRow
                 file={item}
                 ownFiles={ownFiles}
                 deleteMedia={deleteMedia}
               />
-            </GridListTile>) :
+            </GridListTile>
+          ))
+        ) : (
           <GridListTile>
             <CircularProgress />
           </GridListTile>
-        }
+        )}
       </GridList>
     </div>
   );
