@@ -76,14 +76,13 @@ const Map = (props) => {
           searchLabel={'Enter address, please'}
           keepResult={false}
         />
-        <MapMarkers value={props.value} onChange={props.onChange} />
+        <MapMarkers onChange={props.onChange} />
       </MapContainer>
     </>
   );
 };
 
 Map.propTypes = {
-  value: PropTypes.object,
   onChange: PropTypes.func,
 };
 

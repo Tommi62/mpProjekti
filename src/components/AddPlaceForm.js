@@ -1,8 +1,8 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable indent */
-import {useCoordinates, useMedia, useTag} from '../hooks/ApiHooks';
+import {useCoordinates, useMedia, useTag, useUsers} from '../hooks/ApiHooks';
 import {CircularProgress, Button, Grid, Typography} from '@material-ui/core';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
 
@@ -10,6 +10,8 @@ const AddPlaceForm = () => {
   const {postMedia, loading} = useMedia();
   const {postTag} = useTag();
   const {getCoordinates} = useCoordinates();
+  const [user, setUser] = useState(null);
+  const {getUser} = useUsers();
 
   const validators = {
     title: ['required', 'minStringLength: 3'],
@@ -24,6 +26,16 @@ const AddPlaceForm = () => {
     address: ['Vaadittu kenttä!', 'Vähintään kolme merkkiä!'],
     city: ['Vaadittu kenttä!', 'Vähintään kolme merkkiä!'],
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setUser(await getUser(localStorage.getItem('token')));
+      } catch (e) {
+        console.log(e.message);
+      }
+    })();
+  }, []);
 
   const doUpload = async () => {
     try {
@@ -40,6 +52,7 @@ const AddPlaceForm = () => {
         city: inputs.city,
         lat: coords[0].lat,
         lng: coords[0].lon,
+        username: user.username,
       };
       fd.append('description', JSON.stringify(desc));
       fd.append('file', inputs.file);
@@ -49,6 +62,7 @@ const AddPlaceForm = () => {
         result.file_id
       );
       console.log('doUpload', result, tagResult);
+      console.log('desc', desc);
     } catch (e) {
       alert(e.message);
     }

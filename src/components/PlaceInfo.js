@@ -1,19 +1,41 @@
-import {Grid, Typography} from '@material-ui/core';
+/* eslint-disable comma-dangle */
+/* eslint-disable indent */
+import {Avatar, Grid, Typography} from '@material-ui/core';
 import PropTypes from 'prop-types';
+import {useEffect, useState} from 'react';
 import {uploadsUrl} from '../utils/variables';
+import {useTag} from '../hooks/ApiHooks';
 
 const PlaceInfo = ({data}) => {
-  let desc = {};
-  try {
-    desc = JSON.parse(data.description);
-    console.log(desc);
-  } catch (e) {
-    desc = {description: data.description};
-  }
+  const [avatar, setAvatar] = useState('');
+  const {getTag} = useTag();
 
-  console.log('Description', desc.description.description);
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await getTag('avatar_' + data.user_id);
+        if (result.length > 0) {
+          const image = result.pop().filename;
+          setAvatar(uploadsUrl + image);
+        } else {
+          setAvatar('');
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
+    })();
+  }, [data]);
+
   return (
     <>
+      <Grid container alignItems="center" style={{margin: '1rem'}}>
+        <Avatar
+          variant={'round'}
+          src={avatar}
+          style={{marginRight: '0.5rem'}}
+        />
+        <Typography variant="subtitle2">{data.username}</Typography>
+      </Grid>
       <Grid container direction="column" justify="center">
         <Grid item>
           <Typography component="h1" variant="h2" gutterBottom align="center">
@@ -32,12 +54,12 @@ const PlaceInfo = ({data}) => {
 
         <Grid item>
           <Typography gutterBottom align="center">
-            {desc.description.address} {desc.description.city}
+            {data.address} {data.city}
           </Typography>
         </Grid>
         <Grid item>
           <Typography gutterBottom align="center">
-            {desc.description.description}
+            {data.description}
           </Typography>
         </Grid>
       </Grid>

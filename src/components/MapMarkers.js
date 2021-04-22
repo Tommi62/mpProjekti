@@ -8,7 +8,7 @@ const MapMarkers = (props) => {
   console.log('PicArray', picArray);
 
   const handleChange = (item) => {
-    props.onChange(item);
+    props.onChange(item, true);
   };
 
   return picArray.map((item) => (
@@ -29,7 +29,6 @@ const MapMarkers = (props) => {
 };
 
 MapMarkers.propTypes = {
-  value: PropTypes.object,
   onChange: PropTypes.func,
 };
 
