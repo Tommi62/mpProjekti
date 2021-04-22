@@ -32,6 +32,7 @@ const Home = () => {
       city: '',
     },
     file: '',
+    file_id: '',
   });
 
   const handleChange = (newValue) => {
@@ -43,6 +44,7 @@ const Home = () => {
         city: JSON.parse(newValue.description).city,
       },
       file: newValue.filename,
+      file_id: newValue.file_id,
     });
   };
   console.log('value', value);
@@ -52,7 +54,10 @@ const Home = () => {
         <Grid item xs={3}>
           {user && (
             <>
-              <PlaceInfo data={value} />
+              <PlaceInfo
+                data={value}
+                user={user}
+              />
             </>
           )}
         </Grid>

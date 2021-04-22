@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 import {Grid, Typography} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
+import LikeButton from './LikeButton';
 
-const PlaceInfo = ({data}) => {
+const PlaceInfo = ({data, user}) => {
   let desc = {};
   try {
     desc = JSON.parse(data.description);
@@ -29,6 +31,7 @@ const PlaceInfo = ({data}) => {
             margin: 'auto',
           }}
         />
+        <LikeButton data={data} user={user} />
 
         <Grid item>
           <Typography gutterBottom align="center">
@@ -47,6 +50,7 @@ const PlaceInfo = ({data}) => {
 
 PlaceInfo.propTypes = {
   data: PropTypes.object,
+  user: PropTypes.object,
 };
 
 export default PlaceInfo;
