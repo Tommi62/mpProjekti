@@ -61,9 +61,7 @@ const Home = () => {
               <PlaceInfo data={value} />
             </>
           ) : (
-            <>
-              <AddPlaceForm />
-            </>
+            <>{user && <AddPlaceForm />}</>
           )}
         </Grid>
         <Grid item xs={9}>
