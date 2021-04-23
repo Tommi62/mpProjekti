@@ -1,13 +1,14 @@
 import {Grid} from '@material-ui/core';
-// import AddPlaceForm from '../components/AddPlaceForm';
 import Map from '../components/Map';
 import {useEffect, useContext, useState} from 'react';
 import {useUsers} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import PlaceInfo from '../components/PlaceInfo';
+import AddPlaceForm from '../components/AddPlaceForm';
 
 const Home = () => {
   const [user, setUser] = useContext(MediaContext);
+  const [info, setInfo] = useState(false);
   const {getUser} = useUsers();
 
   useEffect(() => {
@@ -25,44 +26,49 @@ const Home = () => {
   }, []);
 
   const [value, setValue] = useState({
-    title: '',
-    description: {
-      description: '',
-      address: '',
-      city: '',
-    },
-    file: '',
     file_id: '',
+    title: '',
+    description: '',
+    address: '',
+    city: '',
+    username: '',
+    file: '',
+    user_id: '',
   });
 
-  const handleChange = (newValue) => {
+  const handleChange = (newValue, bool) => {
     setValue({
-      title: newValue.title,
-      description: {
-        description: JSON.parse(newValue.description).description,
-        address: JSON.parse(newValue.description).address,
-        city: JSON.parse(newValue.description).city,
-      },
-      file: newValue.filename,
       file_id: newValue.file_id,
+      title: newValue.title,
+      description: JSON.parse(newValue.description).description,
+      address: JSON.parse(newValue.description).address,
+      city: JSON.parse(newValue.description).city,
+      username: JSON.parse(newValue.description).username,
+      file: newValue.filename,
+      user_id: newValue.user_id,
     });
+    setInfo(bool);
   };
-  console.log('value', value);
+
+  console.log('value', value, user);
+
   return (
     <>
       <Grid container style={{height: '100%'}}>
         <Grid item xs={3}>
-          {user && (
+          {info ? (
             <>
               <PlaceInfo
                 data={value}
                 user={user}
               />
             </>
+          ) : (
+            <>{user && <AddPlaceForm />}</>
           )}
         </Grid>
         <Grid item xs={9}>
-          <Map value={value} onChange={handleChange} />
+          <Map onChange={handleChange} />
         </Grid>
       </Grid>
     </>
