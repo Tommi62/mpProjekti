@@ -1,12 +1,15 @@
+/* eslint-disable max-len */
+import {Grid, Typography} from '@material-ui/core';
 /* eslint-disable comma-dangle */
 /* eslint-disable indent */
-import {Avatar, Grid, Typography} from '@material-ui/core';
+import {Avatar} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
 import {uploadsUrl} from '../utils/variables';
 import {useTag} from '../hooks/ApiHooks';
+import LikeButton from './LikeButton';
 
-const PlaceInfo = ({data}) => {
+const PlaceInfo = ({data, user}) => {
   const [avatar, setAvatar] = useState('');
   const {getTag} = useTag();
 
@@ -51,6 +54,7 @@ const PlaceInfo = ({data}) => {
             margin: 'auto',
           }}
         />
+        <LikeButton data={data} user={user} />
 
         <Grid item>
           <Typography gutterBottom align="center">
@@ -69,6 +73,7 @@ const PlaceInfo = ({data}) => {
 
 PlaceInfo.propTypes = {
   data: PropTypes.object,
+  user: PropTypes.object,
 };
 
 export default PlaceInfo;

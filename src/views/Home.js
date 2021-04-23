@@ -58,7 +58,10 @@ const Home = () => {
         <Grid item xs={3}>
           {info ? (
             <>
-              <PlaceInfo data={value} />
+              <PlaceInfo
+                data={value}
+                user={user}
+              />
             </>
           ) : (
             <>{user && <AddPlaceForm />}</>

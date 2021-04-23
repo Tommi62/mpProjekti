@@ -248,6 +248,54 @@ const useTag = () => {
   return {postTag, getTag};
 };
 
+const useLikes = () => {
+  const postLike = async (token, id) => {
+    const data = {
+      file_id: id,
+      rating: 5,
+    };
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    try {
+      return await doFetch(baseUrl + 'ratings', fetchOptions);
+    } catch (e) {
+      console.log('liking failed');
+    }
+  };
+
+  const deleteLike = async (token, id) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    try {
+      // console.log('DELETE: ' + baseUrl + 'ratings/file/', fetchOptions);
+      return await doFetch(baseUrl + 'ratings/file/' + id, fetchOptions);
+    } catch (e) {
+      console.log('deleting like failed');
+    }
+  };
+
+  const getLikes = async (id) => {
+    try {
+      console.log('getLikes id: ' + id);
+      return await doFetch(baseUrl + 'ratings/file/' + id);
+    } catch (e) {
+      console.log('getting likes failed');
+    }
+  };
+
+  return {postLike, getLikes, deleteLike};
+};
+
 const useCoordinates = () => {
   const getCoordinates = async (address, city) => {
     try {
@@ -260,4 +308,4 @@ const useCoordinates = () => {
   return {getCoordinates};
 };
 
-export {useLogin, useUsers, useMedia, useTag, useCoordinates};
+export {useLogin, useUsers, useMedia, useTag, useCoordinates, useLikes};
