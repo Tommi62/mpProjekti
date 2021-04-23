@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable indent */
 /* eslint-disable max-len */
 import {Typography} from '@material-ui/core';
 import PropTypes from 'prop-types';
@@ -5,7 +7,6 @@ import {useState, useEffect} from 'react';
 import {useLikes} from '../hooks/ApiHooks';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
 
 const LikeButton = ({data, user}) => {
   let liked = 0;
@@ -29,7 +30,12 @@ const LikeButton = ({data, user}) => {
     postLikes.map((likeObject) => {
       likeCount++;
       if (likeObject.user_id === user.user_id) {
-        console.log('like if object userid: ' + likeObject.user_id + ' user userid:' + user.user_id);
+        console.log(
+          'like if object userid: ' +
+            likeObject.user_id +
+            ' user userid:' +
+            user.user_id
+        );
         liked = 1;
       }
     });

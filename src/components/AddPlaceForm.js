@@ -5,8 +5,9 @@ import {CircularProgress, Button, Grid, Typography} from '@material-ui/core';
 import {useEffect, useState} from 'react';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
+import PropTypes from 'prop-types';
 
-const AddPlaceForm = () => {
+const AddPlaceForm = ({onChange}) => {
   const {postMedia, loading} = useMedia();
   const {postTag} = useTag();
   const {getCoordinates} = useCoordinates();
@@ -63,6 +64,7 @@ const AddPlaceForm = () => {
       );
       console.log('doUpload', result, tagResult);
       console.log('desc', desc);
+      handleChange();
     } catch (e) {
       alert(e.message);
     }
@@ -102,6 +104,10 @@ const AddPlaceForm = () => {
       }
     }
   }, [inputs.file]);
+
+  const handleChange = () => {
+    onChange(false);
+  };
 
   return (
     <Grid container justify="center">
@@ -200,6 +206,10 @@ const AddPlaceForm = () => {
       </Grid>
     </Grid>
   );
+};
+
+AddPlaceForm.propTypes = {
+  onChange: PropTypes.func,
 };
 
 export default AddPlaceForm;

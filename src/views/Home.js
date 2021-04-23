@@ -5,10 +5,12 @@ import {useUsers} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import PlaceInfo from '../components/PlaceInfo';
 import AddPlaceForm from '../components/AddPlaceForm';
+import StartInfo from '../components/StartInfo';
 
 const Home = () => {
   const [user, setUser] = useContext(MediaContext);
-  const [info, setInfo] = useState(false);
+  const [placeInfo, setPlaceInfo] = useState(false);
+  const [startInfo, setStartInfo] = useState(false);
   const {getUser} = useUsers();
 
   useEffect(() => {
@@ -47,24 +49,31 @@ const Home = () => {
       file: newValue.filename,
       user_id: newValue.user_id,
     });
-    setInfo(bool);
+    setPlaceInfo(bool);
   };
 
-  console.log('value', value, user);
+  const handleStartInfoChange = (bool) => {
+    setStartInfo(bool);
+  };
+
+  console.log('value', value, user, startInfo);
 
   return (
     <>
       <Grid container style={{height: '100%'}}>
         <Grid item xs={3}>
-          {info ? (
+          {placeInfo ? (
             <>
-              <PlaceInfo
-                data={value}
-                user={user}
-              />
+              <PlaceInfo data={value} user={user} />
             </>
           ) : (
-            <>{user && <AddPlaceForm />}</>
+            <>
+              {startInfo ? (
+                <AddPlaceForm onChange={handleStartInfoChange} />
+              ) : (
+                <StartInfo user={user} onChange={handleStartInfoChange} />
+              )}
+            </>
           )}
         </Grid>
         <Grid item xs={9}>
