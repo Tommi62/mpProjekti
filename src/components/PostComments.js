@@ -1,52 +1,18 @@
-import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemText,
-} from '@material-ui/core';
+/* eslint-disable indent */
+import {List} from '@material-ui/core';
 import {PropTypes} from 'prop-types';
-import {useState, useEffect} from 'react';
-import {useTag} from '../hooks/ApiHooks';
-import {uploadsUrl} from '../utils/variables';
+import Comment from './Comment';
 
 const PostComments = ({comments}) => {
-  const [avatar, setAvatar] = useState('');
-  const {getTag} = useTag();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const result = await getTag('avatar_' + comments[0].user_id);
-        console.log('RESULTTI: ' + result);
-        if (result.length > 0) {
-          const image = result.pop().filename;
-          setAvatar(uploadsUrl + image);
-        } else {
-          setAvatar('');
-        }
-      } catch (e) {
-        console.log(e.message);
-      }
-    })();
-  }, [comments]);
-
-  console.log('POSTCOMMENTS: ' + comments);
-  const data = comments.map((item) => (
-    <>
-      <List>
-        <Avatar
-          variant={'round'}
-          src={avatar}
-          style={{marginRight: '0.5rem'}}
-        />
-        <ListItem>
-          <ListItemText primary={item.comment} />
-        </ListItem>
-      </List>
-    </>
-  ));
-  return data;
+  return (
+    <List>
+      {comments.map((item) => (
+        <Comment key={item.comment_id} comment={item}></Comment>
+      ))}
+    </List>
+  );
 };
+
 
 PostComments.propTypes = {
   comments: PropTypes.array,

@@ -27,8 +27,10 @@ const LikeButton = ({data, user}) => {
     const postLikes = await getLikes(id);
     postLikes.map((likeObject) => {
       likeCount++;
-      if (likeObject.user_id === user.user_id) {
-        liked = 1;
+      if (user) {
+        if (likeObject.user_id === user.user_id) {
+          liked = 1;
+        }
       }
     });
     setLikedByUser(liked);

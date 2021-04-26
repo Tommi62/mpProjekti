@@ -10,6 +10,11 @@ import PostComments from './PostComments';
 const CommentSection = ({data, user}) => {
   const {postComment, getComments} = useComments();
   const token = localStorage.getItem('token');
+  let username = 'default';
+
+  if (user) {
+    username = user.username;
+  };
 
   let id = null;
   try {
@@ -28,11 +33,6 @@ const CommentSection = ({data, user}) => {
 
   const parseComments = async (id) => {
     const postComments = await getComments(id);
-    postComments.map((commentObject) => {
-      if (commentObject.user_id === user.user_id) {
-        // deletebutton
-      }
-    });
     setComments(postComments);
   };
 
@@ -40,8 +40,12 @@ const CommentSection = ({data, user}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('commenting post ' + comment);
-    await postComment(token, id, comment);
+    const commentObject = JSON.stringify({
+      comment: comment,
+      username: username,
+    });
+    console.log('commenting post ' + commentObject);
+    await postComment(token, id, commentObject);
     parseComments(id);
   };
 
@@ -55,15 +59,19 @@ const CommentSection = ({data, user}) => {
   return (
     <>
       <PostComments comments={comments} />
-      <form onSubmit={handleSubmit}>
-        <TextField variant="outlined" margin="normal" fullWidth
-          value={comment}
-          onInput={(e) => setComment(e.target.value)}
-        />
-        <Button type="submit" fullWidth variant="contained" color="primary">
-          post
-        </Button>
-      </form>
+      {user && (
+        <>
+          <form onSubmit={handleSubmit}>
+            <TextField variant="outlined" margin="normal" fullWidth
+              value={comment}
+              onInput={(e) => setComment(e.target.value)}
+            />
+            <Button type="submit" fullWidth variant="contained" color="primary">
+              post
+            </Button>
+          </form>
+        </>
+      )}
     </>
   );
 };
