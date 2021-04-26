@@ -85,21 +85,9 @@ const RegisterForm = ({setToggle}) => {
           Register
         </Typography>
       </Grid>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-      >
+      <Grid item xs={12} container direction="column" alignItems="center">
         <ValidatorForm onSubmit={handleSubmit}>
-          <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justify="center"
-          >
+          <Grid container direction="column">
             <Grid container item>
               <TextValidator
                 fullWidth

@@ -80,7 +80,13 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
   // console.log('RegisterForm', inputs);
 
   return (
-    <Grid container>
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+    >
       <Grid item xs={12}>
         <Typography component="h1" variant="h4" gutterBottom>
           Update profile
@@ -88,8 +94,8 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
       </Grid>
       <Grid item xs={12}>
         <ValidatorForm onSubmit={handleSubmit}>
-          <Grid container>
-            <Grid item xs={12}>
+          <Grid container alignItems="center" justify="center">
+            <Grid item xs={7}>
               <TextValidator
                 fullWidth
                 type="password"
@@ -102,7 +108,7 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={7}>
               <TextValidator
                 fullWidth
                 type="password"
@@ -115,7 +121,7 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={7}>
               <TextValidator
                 fullWidth
                 type="email"
@@ -128,7 +134,7 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={7}>
               <Typography component="h4" variant="h6" gutterBottom>
                 Update profile picture
               </Typography>
@@ -141,7 +147,7 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={7}>
               <Button
                 fullWidth
                 color="primary"
