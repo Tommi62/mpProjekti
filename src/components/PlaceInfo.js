@@ -8,8 +8,9 @@ import {useEffect, useState} from 'react';
 import {uploadsUrl} from '../utils/variables';
 import {useTag} from '../hooks/ApiHooks';
 import LikeButton from './LikeButton';
+import CloseButton from './CloseButton';
 
-const PlaceInfo = ({data, user}) => {
+const PlaceInfo = ({data, user, onChange}) => {
   const [avatar, setAvatar] = useState('');
   const {getTag} = useTag();
 
@@ -37,7 +38,10 @@ const PlaceInfo = ({data, user}) => {
           src={avatar}
           style={{marginRight: '0.5rem'}}
         />
-        <Typography variant="subtitle2">{data.username}</Typography>
+        <Typography variant="subtitle2" style={{width: '22.5rem'}}>
+          {data.username}
+        </Typography>
+        <CloseButton onChange={onChange} />
       </Grid>
       <Grid container direction="column" justify="center">
         <Grid item>
@@ -74,6 +78,7 @@ const PlaceInfo = ({data, user}) => {
 PlaceInfo.propTypes = {
   data: PropTypes.object,
   user: PropTypes.object,
+  onChange: PropTypes.func,
 };
 
 export default PlaceInfo;

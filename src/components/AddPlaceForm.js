@@ -6,6 +6,7 @@ import {useEffect, useState} from 'react';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
 import PropTypes from 'prop-types';
+import CloseButton from './CloseButton';
 
 const AddPlaceForm = ({onChange}) => {
   const {postMedia, loading} = useMedia();
@@ -111,6 +112,9 @@ const AddPlaceForm = ({onChange}) => {
 
   return (
     <Grid container justify="center">
+      <Grid container justify="flex-end">
+        <CloseButton onChange={onChange} />
+      </Grid>
       <Grid item xs={12}>
         <Typography component="h1" variant="h2" gutterBottom align="center">
           Add a place

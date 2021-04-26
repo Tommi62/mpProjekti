@@ -64,7 +64,7 @@ const Home = () => {
         <Grid item xs={3}>
           {placeInfo ? (
             <>
-              <PlaceInfo data={value} user={user} />
+              <PlaceInfo data={value} user={user} onChange={setPlaceInfo} />
             </>
           ) : (
             <>
