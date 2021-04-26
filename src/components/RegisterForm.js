@@ -74,14 +74,32 @@ const RegisterForm = ({setToggle}) => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
         <Typography component="h1" variant="h2" gutterBottom>
           Register
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
         <ValidatorForm onSubmit={handleSubmit}>
-          <Grid container>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justify="center"
+          >
             <Grid container item>
               <TextValidator
                 fullWidth
