@@ -9,6 +9,7 @@ import {uploadsUrl} from '../utils/variables';
 import {useTag} from '../hooks/ApiHooks';
 import LikeButton from './LikeButton';
 import CloseButton from './CloseButton';
+import CommentSection from './CommentSection';
 
 const PlaceInfo = ({data, user, onChange}) => {
   const [avatar, setAvatar] = useState('');
@@ -71,6 +72,7 @@ const PlaceInfo = ({data, user, onChange}) => {
           </Typography>
         </Grid>
       </Grid>
+      <CommentSection data={data} user={user} />
     </>
   );
 };

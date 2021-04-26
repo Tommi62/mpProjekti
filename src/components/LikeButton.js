@@ -17,7 +17,6 @@ const LikeButton = ({data, user}) => {
   let id = null;
   try {
     id = data.file_id;
-    console.log('file_id: ' + id);
   } catch (e) {
     console.log('file_id error: ' + id);
   }
@@ -29,35 +28,27 @@ const LikeButton = ({data, user}) => {
     const postLikes = await getLikes(id);
     postLikes.map((likeObject) => {
       likeCount++;
-      if (likeObject.user_id === user.user_id) {
-        console.log(
-          'like if object userid: ' +
-            likeObject.user_id +
-            ' user userid:' +
-            user.user_id
-        );
-        liked = 1;
+      if (user) {
+        if (likeObject.user_id === user.user_id) {
+          liked = 1;
+        }
       }
     });
-    console.log('postLikes: ' + postLikes.length);
     setLikedByUser(liked);
     setLikes(likeCount);
   };
 
   const toggleLike = async () => {
     if (!likedByUser) {
-      console.log('liking post');
       await postLike(token, id);
       parseLikes(id);
     } else {
-      console.log('unliking post');
       await deleteLike(token, id);
       parseLikes(id);
     }
   };
 
   useEffect(() => {
-    console.log('likes useeffect');
     if (!(data.file_id === '')) {
       parseLikes(id);
     }

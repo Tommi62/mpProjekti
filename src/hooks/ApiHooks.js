@@ -277,7 +277,6 @@ const useLikes = () => {
       },
     };
     try {
-      // console.log('DELETE: ' + baseUrl + 'ratings/file/', fetchOptions);
       return await doFetch(baseUrl + 'ratings/file/' + id, fetchOptions);
     } catch (e) {
       console.log('deleting like failed');
@@ -296,6 +295,53 @@ const useLikes = () => {
   return {postLike, getLikes, deleteLike};
 };
 
+const useComments = () => {
+  const postComment = async (token, id, comment) => {
+    const data = {
+      file_id: id,
+      comment: comment,
+    };
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    try {
+      return await doFetch(baseUrl + 'comments', fetchOptions);
+    } catch (e) {
+      console.log('commenting failed');
+    }
+  };
+
+  const deleteComment = async (token, id) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    try {
+      return await doFetch(baseUrl + 'comments/' + id, fetchOptions);
+    } catch (e) {
+      console.log('deleting comment failed');
+    }
+  };
+
+  const getComments = async (id) => {
+    try {
+      console.log('getComments id: ' + id);
+      return await doFetch(baseUrl + 'comments/file/' + id);
+    } catch (e) {
+      console.log('getting comments failed');
+    }
+  };
+
+  return {postComment, getComments, deleteComment};
+};
+
 const useCoordinates = () => {
   const getCoordinates = async (address, city) => {
     try {
@@ -308,4 +354,12 @@ const useCoordinates = () => {
   return {getCoordinates};
 };
 
-export {useLogin, useUsers, useMedia, useTag, useCoordinates, useLikes};
+export {
+  useLogin,
+  useUsers,
+  useMedia,
+  useTag,
+  useCoordinates,
+  useLikes,
+  useComments,
+};
