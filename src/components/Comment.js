@@ -54,30 +54,31 @@ const Comment = ({comment}) => {
     })();
   }, []);
 
-  return (<>
-    <ListItem alignItems="flex-start">
-      <ListItemAvatar>
-        <Avatar alt={commentObject.username} src={img} />
-      </ListItemAvatar>
-      <ListItemText
-        primary={commentObject.username}
-        secondary={
-          <>
-            <Typography
-              component="span"
-              variant="body2"
-              className={classes.inline}
-              color="textPrimary"
-            >
-              {commentObject.comment}
-            </Typography>
-          </>
-        }
-      />
-    </ListItem>
-  </>);
+  return (
+    <>
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt={commentObject.username} src={img} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={commentObject.username}
+          secondary={
+            <>
+              <Typography
+                component="span"
+                variant="body2"
+                className={classes.inline}
+                color="textPrimary"
+              >
+                {commentObject.comment}
+              </Typography>
+            </>
+          }
+        />
+      </ListItem>
+    </>
+  );
 };
-
 
 Comment.propTypes = {
   comment: PropTypes.object,

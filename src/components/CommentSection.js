@@ -6,7 +6,6 @@ import {Button} from '@material-ui/core';
 import {TextField} from '@material-ui/core';
 import PostComments from './PostComments';
 
-
 const CommentSection = ({data, user}) => {
   const {postComment, getComments} = useComments();
   const token = localStorage.getItem('token');
@@ -14,7 +13,7 @@ const CommentSection = ({data, user}) => {
 
   if (user) {
     username = user.username;
-  };
+  }
 
   let id = null;
   try {
@@ -62,7 +61,10 @@ const CommentSection = ({data, user}) => {
       {user && (
         <>
           <form onSubmit={handleSubmit}>
-            <TextField variant="outlined" margin="normal" fullWidth
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
               value={comment}
               onInput={(e) => setComment(e.target.value)}
             />

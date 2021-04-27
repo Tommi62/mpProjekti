@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 const MapMarkers = (props) => {
   const {picArray} = useMedia(true, false);
-  console.log('PicArray', picArray);
 
   const handleChange = (item) => {
     props.onChange(item, true);

@@ -13,7 +13,6 @@ const PostComments = ({comments}) => {
   );
 };
 
-
 PostComments.propTypes = {
   comments: PropTypes.array,
 };

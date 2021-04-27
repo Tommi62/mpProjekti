@@ -21,6 +21,8 @@ const doFetch = async (url, options = {}) => {
   }
 };
 
+let posted = 0;
+
 const useUsers = () => {
   const register = async (inputs) => {
     const fetchOptions = {
@@ -128,7 +130,7 @@ const useMedia = (update = false, ownFiles) => {
       } catch (e) {
         alert(e.message);
       }
-    }, []);
+    }, [posted]);
   }
 
   const getMedia = async () => {
@@ -169,6 +171,7 @@ const useMedia = (update = false, ownFiles) => {
       throw new Error('upload failed');
     } finally {
       setLoading(false);
+      posted++;
     }
   };
 
@@ -212,7 +215,14 @@ const useMedia = (update = false, ownFiles) => {
     }
   };
 
-  return {getMedia, postMedia, putMedia, deleteMedia, loading, picArray};
+  return {
+    getMedia,
+    postMedia,
+    putMedia,
+    deleteMedia,
+    loading,
+    picArray,
+  };
 };
 
 const useTag = () => {
