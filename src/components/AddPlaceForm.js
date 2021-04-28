@@ -8,7 +8,7 @@ import useUploadForm from '../hooks/UploadHooks';
 import PropTypes from 'prop-types';
 import CloseButton from './CloseButton';
 
-const AddPlaceForm = ({onChange}) => {
+const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
   const {postMedia, loading} = useMedia();
   const {postTag} = useTag();
   const {getCoordinates} = useCoordinates();
@@ -38,6 +38,10 @@ const AddPlaceForm = ({onChange}) => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    console.log(hoverCoordinates);
+  }, [hoverCoordinates]);
 
   const doUpload = async () => {
     try {
@@ -110,6 +114,10 @@ const AddPlaceForm = ({onChange}) => {
     onChange(false);
   };
 
+  const setLocation = () => {
+    setMapHover(true);
+  };
+
   return (
     <Grid container justify="center">
       <Grid container justify="flex-end">
@@ -135,28 +143,57 @@ const AddPlaceForm = ({onChange}) => {
                   errorMessages={errorMessages.title}
                 />
               </Grid>
-              <Grid container item>
-                <TextValidator
-                  fullWidth
-                  name="address"
-                  label="Address"
-                  value={inputs.address}
-                  onChange={handleInputChange}
-                  validators={validators.address}
-                  errorMessages={errorMessages.address}
-                />
-              </Grid>
-              <Grid container item>
-                <TextValidator
-                  fullWidth
-                  name="city"
-                  label="City"
-                  value={inputs.city}
-                  onChange={handleInputChange}
-                  validators={validators.city}
-                  errorMessages={errorMessages.city}
-                />
-              </Grid>
+              {dropped ? (
+                <>
+                  <Grid container item>
+                    <TextValidator
+                      fullWidth
+                      name="address"
+                      label="Address"
+                      value={inputs.address}
+                      onChange={handleInputChange}
+                      validators={validators.address}
+                      errorMessages={errorMessages.address}
+                    />
+                  </Grid>
+                  <Grid container item>
+                    <TextValidator
+                      fullWidth
+                      name="city"
+                      label="City"
+                      value={inputs.city}
+                      onChange={handleInputChange}
+                      validators={validators.city}
+                      errorMessages={errorMessages.city}
+                    />
+                  </Grid>
+                </>
+              ) : (
+                <>
+                  <Grid container item>
+                    <TextValidator
+                      fullWidth
+                      name="lat"
+                      value={inputs.address, hoverCoordinates.lat}
+                      onChange={handleInputChange}
+                      errorMessages={errorMessages.address}
+                    />
+                  </Grid>
+                  <Grid container item>
+                    <TextValidator
+                      fullWidth
+                      name="lng"
+                      value={inputs.city, hoverCoordinates.lng}
+                      onChange={handleInputChange}
+                      errorMessages={errorMessages.city}
+                    />
+                  </Grid>
+                </>)
+              }
+
+              <Button variant="outlined" onClick={setLocation}>
+                Point on map
+              </Button>
               <Grid container item>
                 <TextValidator
                   fullWidth
@@ -208,12 +245,15 @@ const AddPlaceForm = ({onChange}) => {
           <CircularProgress />
         )}
       </Grid>
-    </Grid>
+    </Grid >
   );
 };
 
 AddPlaceForm.propTypes = {
   onChange: PropTypes.func,
+  setMapHover: PropTypes.func,
+  hoverCoordinates: PropTypes.string,
+  dropped: PropTypes.bool,
 };
 
 export default AddPlaceForm;
