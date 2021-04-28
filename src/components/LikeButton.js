@@ -1,7 +1,6 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-import {Typography} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
 import {useLikes} from '../hooks/ApiHooks';
@@ -56,16 +55,13 @@ const LikeButton = ({data, user}) => {
 
   return (
     <>
-      <Typography component="h1" variant="h2" gutterBottom>
-        like count {likes}
-      </Typography>
       {likedByUser ? (
         <IconButton onClick={toggleLike} color="secondary" aria-label="like">
-          <FavoriteIcon />
+          {likes}<FavoriteIcon />
         </IconButton>
       ) : (
         <IconButton onClick={toggleLike} aria-label="like">
-          <FavoriteIcon />
+          {likes}<FavoriteIcon />
         </IconButton>
       )}
     </>

@@ -4,22 +4,19 @@ import {useUsers} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import {
   AppBar,
-  IconButton,
   makeStyles,
   Toolbar,
   Typography,
   Button,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Link,
+  Avatar,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import logo from '../gem-logo.svg';
+import {useTag} from '../hooks/ApiHooks';
+import {uploadsUrl} from '../utils/variables';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,18 +27,41 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    paddingRight: '24px',
+  },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  itemPack: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  logo: {
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    left: '50%',
+    transform: 'translate(-50%)',
+  },
+  logoText: {
+    fontFamily: '"Pacifico", cursive',
+  },
+  logout: {
+    paddingLeft: '24px',
+  },
+  avatar: {
+    marginLeft: '12px',
   },
 }));
 
 const Nav = () => {
   const classes = useStyles();
   const [user, setUser] = useContext(MediaContext);
-  const [open, setOpen] = useState(false);
   const {getUser} = useUsers();
+  const [avatar, setAvatar] = useState('');
+  const {getTag} = useTag();
 
-  const toggleDrawer = (opener) => () => {
-    setOpen(opener);
-  };
 
   useEffect(() => {
     const checkUser = async () => {
@@ -57,77 +77,83 @@ const Nav = () => {
     checkUser();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await getTag('avatar_' + user.user_id);
+        if (result.length > 0) {
+          const image = result.pop().filename;
+          setAvatar(uploadsUrl + image);
+        } else {
+          setAvatar('');
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
+    })();
+  }, [user]);
+
   return (
     <>
       <AppBar>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            <Link component={RouterLink} to="/" color="inherit">
-              Home
-            </Link>
-          </Typography>
-          {user ? (
-            <Button
-              color="inherit"
-              startIcon={<ExitToAppIcon />}
-              component={RouterLink}
-              to="/logout"
-            >
-              Logout
-            </Button>
-          ) : (
-            <Button
-              color="inherit"
-              startIcon={<ExitToAppIcon />}
-              component={RouterLink}
-              to="/login"
-            >
-              Login
-            </Button>
-          )}
-        </Toolbar>
-      </AppBar>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
-        <List>
-          <ListItem
-            button
-            component={RouterLink}
-            onClick={toggleDrawer(false)}
-            to="/"
-          >
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
-          <>
+        <Toolbar className={classes.toolbar}>
+          <div className={classes.itemPack}>
+            <HomeIcon></HomeIcon>
+            <Typography variant="h6" className={classes.title}>
+              <Link component={RouterLink} to="/" color="inherit">
+                Home
+              </Link>
+            </Typography>
             {user && (
               <>
-                <ListItem
-                  button
-                  component={RouterLink}
-                  onClick={toggleDrawer(false)}
-                  to="/profile"
-                >
-                  <ListItemIcon>
-                    <AccountBoxIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Profile" />
-                </ListItem>
+                <AccountBoxIcon></AccountBoxIcon>
+                <Typography variant="h6" className={classes.title}>
+                  <Link component={RouterLink} to="/profile" color="inherit">
+                    Profile
+                  </Link>
+                </Typography>
               </>
             )}
-          </>
-        </List>
-      </Drawer>
+          </div>
+          <div className={classes.logo}>
+            <img style={
+              {height: '52px', width: '52px', marginRight: '6px'}
+            } src={logo}>
+            </img>
+            <Typography variant="h4" className={classes.logoText}>
+              Hidden Gem
+            </Typography>
+          </div>
+          <div className={classes.itemPack}>
+            {user ? (
+              <>
+                <Typography variant="h6">
+                  {user.username}
+                </Typography>
+                <Avatar src={avatar} className={classes.avatar} />
+                <Button
+                  className={classes.logout}
+                  color="inherit"
+                  startIcon={<ExitToAppIcon />}
+                  component={RouterLink}
+                  to="/logout"
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Button
+                color="inherit"
+                startIcon={<ExitToAppIcon />}
+                component={RouterLink}
+                to="/login"
+              >
+                Login
+              </Button>
+            )}
+          </div>
+        </Toolbar>
+      </AppBar>
     </>
   );
 };

@@ -11,8 +11,14 @@ const Home = () => {
   const [user, setUser] = useContext(MediaContext);
   const [placeInfo, setPlaceInfo] = useState(false);
   const [startInfo, setStartInfo] = useState(false);
+<<<<<<< HEAD
   const [initialPosition, setInitialPosition] = useState(null);
   const [clicked, setClicked] = useState(false);
+=======
+  const [mapHover, setMapHover] = useState(false);
+  const [hoverCoordinates, setHoverCoordinates] = useState({lat: 10, lng: 10});
+  const [dropped, setDropped] = useState(true);
+>>>>>>> andrei6
   const {getUser} = useUsers();
 
   useEffect(() => {
@@ -71,7 +77,11 @@ const Home = () => {
           ) : (
             <>
               {startInfo ? (
-                <AddPlaceForm onChange={handleStartInfoChange} />
+                <AddPlaceForm
+                  hoverCoordinates={hoverCoordinates}
+                  setMapHover={setMapHover}
+                  onChange={handleStartInfoChange}
+                  dropped={dropped} />
               ) : (
                 <StartInfo
                   user={user}
@@ -85,11 +95,11 @@ const Home = () => {
         </Grid>
         <Grid item xs={9}>
           <Map
+            mapHover={mapHover}
             onChange={handleChange}
-            initialPosition={initialPosition}
-            clicked={clicked}
-            setClicked={setClicked}
-          />
+            setHoverCoordinates={setHoverCoordinates}
+            dropped={dropped}
+            setDropped={setDropped} />
         </Grid>
       </Grid>
     </>
