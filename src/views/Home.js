@@ -11,14 +11,12 @@ const Home = () => {
   const [user, setUser] = useContext(MediaContext);
   const [placeInfo, setPlaceInfo] = useState(false);
   const [startInfo, setStartInfo] = useState(false);
-<<<<<<< HEAD
   const [initialPosition, setInitialPosition] = useState(null);
   const [clicked, setClicked] = useState(false);
-=======
   const [mapHover, setMapHover] = useState(false);
   const [hoverCoordinates, setHoverCoordinates] = useState({lat: 10, lng: 10});
   const [dropped, setDropped] = useState(true);
->>>>>>> andrei6
+  const [visible, setVisible] = useState(false);
   const {getUser} = useUsers();
 
   useEffect(() => {
@@ -64,8 +62,6 @@ const Home = () => {
     setStartInfo(bool);
   };
 
-  console.log('value', value, user, startInfo);
-
   return (
     <>
       <Grid container style={{height: '100%'}}>
@@ -81,7 +77,10 @@ const Home = () => {
                   hoverCoordinates={hoverCoordinates}
                   setMapHover={setMapHover}
                   onChange={handleStartInfoChange}
-                  dropped={dropped} />
+                  setVisible={setVisible}
+                  setDropped={setDropped}
+                  dropped={dropped}
+                  mapHover={mapHover} />
               ) : (
                 <StartInfo
                   user={user}
@@ -99,7 +98,12 @@ const Home = () => {
             onChange={handleChange}
             setHoverCoordinates={setHoverCoordinates}
             dropped={dropped}
-            setDropped={setDropped} />
+            setDropped={setDropped}
+            setClicked={setClicked}
+            clicked={clicked}
+            setVisible={setVisible}
+            visible={visible}
+            initialPosition={initialPosition} />
         </Grid>
       </Grid>
     </>

@@ -1,31 +1,25 @@
 /* eslint-disable new-cap */
 /* eslint-disable require-jsdoc */
-import {MapContainer, TileLayer} from 'react-leaflet';
+import {MapContainer, TileLayer, useMapEvents} from 'react-leaflet';
 import Search from './Search';
 import {OpenStreetMapProvider} from 'react-leaflet-geosearch';
 import MapMarkers from './MapMarkers';
 import PropTypes from 'prop-types';
 import ChangeView from './ChangeView';
+import {Marker} from 'react-leaflet';
+import {useState} from 'react';
 
-<<<<<<< HEAD
-const Map = ({onChange, initialPosition, clicked, setClicked}) => {
-=======
-
-const Map = (props) => {
-  const LeafIcon = L.Icon.extend({
-    options: {},
-  });
-
-  const redIcon = new LeafIcon({
-    iconUrl:
-      'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-    shadowUrl:
-      'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41],
-  });
+const Map = ({onChange,
+  initialPosition,
+  clicked,
+  setClicked,
+  setDropped,
+  dropped,
+  setHoverCoordinates,
+  mapHover,
+  visible,
+  setVisible}) => {
+  const [latLng, setLatLng] = useState('');
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
@@ -43,21 +37,16 @@ const Map = (props) => {
     });
 
     return position === null ? null : (
-      <Marker position={position} icon={redIcon}>
-        <Popup>You are here</Popup>
+      <Marker position={position}>
       </Marker>
     );
   };
 
-  const [latLng, setLatLng] = useState('');
-  const [visible, setVisible] = useState(false);
-
-
-  function onMapHover(e) {
-    if (props.mapHover) {
-      if (props.dropped) {
+  const onMapHover = (e) => {
+    if (mapHover) {
+      if (dropped) {
         setLatLng(e.latlng);
-        props.setHoverCoordinates({
+        setHoverCoordinates({
           lat: e.latlng.lat,
           lng: e.latlng.lng,
         });
@@ -67,12 +56,11 @@ const Map = (props) => {
   };
 
   const dropMarker = () => {
-    if (props.mapHover) {
-      props.setDropped(false);
+    if (mapHover) {
+      setDropped(false);
     }
   };
 
->>>>>>> andrei6
   const prov = OpenStreetMapProvider();
 
 
@@ -107,16 +95,23 @@ const Map = (props) => {
           searchLabel={'Enter address, please'}
           keepResult={false}
         />
-        <MapMarkers onChange={props.onChange} />
+        <MapMarkers onChange={onChange} />
+        <LocationMarker />
         {visible && (
           <Marker
             draggable={'true'}
             eventHandlers={{
               dragend: (event) => {
-                props.setHoverCoordinates({
+                setHoverCoordinates({
                   lat: event.target.getLatLng().lat,
                   lng: event.target.getLatLng().lng,
                 });
+              },
+              mousemove: (event) => {
+                onMapHover(event);
+              },
+              click: () => {
+                dropMarker();
               },
             }}
             key={'click'}
@@ -132,16 +127,16 @@ const Map = (props) => {
 
 Map.propTypes = {
   onChange: PropTypes.func,
-<<<<<<< HEAD
   initialPosition: PropTypes.array,
   clicked: PropTypes.bool,
   setClicked: PropTypes.func,
-=======
   mapHover: PropTypes.bool,
   setHoverCoordinates: PropTypes.func,
   setDropped: PropTypes.func,
   dropped: PropTypes.bool,
->>>>>>> andrei6
+  setVisible: PropTypes.func,
+  visible: PropTypes.bool,
 };
 
 export default Map;
+
