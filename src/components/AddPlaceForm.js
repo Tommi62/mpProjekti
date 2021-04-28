@@ -7,11 +7,21 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
 import PropTypes from 'prop-types';
 import CloseButton from './CloseButton';
+import {IconButton} from '@material-ui/core';
+import AddLocationIcon from '@material-ui/icons/AddLocation';
 
-const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
+const AddPlaceForm = ({
+  onChange,
+  setMapHover,
+  hoverCoordinates,
+  dropped,
+  setDropped,
+  mapHover,
+  setVisible,
+}) => {
   const {postMedia, loading} = useMedia();
   const {postTag} = useTag();
-  const {getCoordinates} = useCoordinates();
+  const {getCoordinates, getReverseCoordinates} = useCoordinates();
   const [user, setUser] = useState(null);
   const {getUser} = useUsers();
 
@@ -39,27 +49,50 @@ const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log(hoverCoordinates);
-  }, [hoverCoordinates]);
-
   const doUpload = async () => {
+    let desc = {};
+    const fd = new FormData();
     try {
-      const coords = await getCoordinates(inputs.address, inputs.city);
-      if (coords === undefined || coords.length == 0) {
-        throw new Error('Address not found');
+      if (dropped) {
+        const coords = await getCoordinates(inputs.address, inputs.city);
+        if (coords === undefined || coords.length == 0) {
+          throw new Error('Address not found');
+        }
+        console.log('Coords', coords[0].lat);
+        fd.append('title', inputs.title);
+        desc = {
+          description: inputs.description,
+          address: inputs.address,
+          city: inputs.city,
+          lat: coords[0].lat,
+          lng: coords[0].lon,
+          username: user.username,
+        };
+      } else {
+        console.log(
+          'coords and state: ' +
+            hoverCoordinates.lat +
+            ' ' +
+            hoverCoordinates.lng
+        );
+        const address = await getReverseCoordinates(
+          hoverCoordinates.lat,
+          hoverCoordinates.lng
+        );
+        if (address === undefined || address.length == 0) {
+          throw new Error('Coords not found');
+        }
+        console.log('Coords', address);
+        fd.append('title', inputs.title);
+        desc = {
+          description: inputs.description,
+          address: address.address.road,
+          city: address.address.city,
+          lat: hoverCoordinates.lat,
+          lng: hoverCoordinates.lng,
+          username: user.username,
+        };
       }
-      console.log('Coords', coords[0].lat);
-      const fd = new FormData();
-      fd.append('title', inputs.title);
-      const desc = {
-        description: inputs.description,
-        address: inputs.address,
-        city: inputs.city,
-        lat: coords[0].lat,
-        lng: coords[0].lon,
-        username: user.username,
-      };
       fd.append('description', JSON.stringify(desc));
       fd.append('file', inputs.file);
       const result = await postMedia(fd, localStorage.getItem('token'));
@@ -70,6 +103,9 @@ const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
       console.log('doUpload', result, tagResult);
       console.log('desc', desc);
       handleChange();
+      setDropped(true);
+      setVisible(false);
+      setMapHover(false);
     } catch (e) {
       alert(e.message);
     }
@@ -115,7 +151,13 @@ const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
   };
 
   const setLocation = () => {
-    setMapHover(true);
+    if (mapHover) {
+      setDropped(true);
+      setVisible(false);
+      setMapHover(false);
+    } else {
+      setMapHover(true);
+    }
   };
 
   return (
@@ -173,8 +215,9 @@ const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
                   <Grid container item>
                     <TextValidator
                       fullWidth
-                      name="lat"
-                      value={(inputs.address, hoverCoordinates.lat)}
+                      name="address"
+                      label="Address"
+                      disabled
                       onChange={handleInputChange}
                       errorMessages={errorMessages.address}
                     />
@@ -182,18 +225,28 @@ const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
                   <Grid container item>
                     <TextValidator
                       fullWidth
-                      name="lng"
-                      value={(inputs.city, hoverCoordinates.lng)}
+                      name="city"
+                      label="City"
+                      disabled
                       onChange={handleInputChange}
                       errorMessages={errorMessages.city}
                     />
                   </Grid>
                 </>
               )}
-
-              <Button variant="outlined" onClick={setLocation}>
-                Point on map
-              </Button>
+              {mapHover ? (
+                <IconButton
+                  aria-label="location"
+                  color="primary"
+                  onClick={setLocation}
+                >
+                  <AddLocationIcon></AddLocationIcon>
+                </IconButton>
+              ) : (
+                <IconButton aria-label="location" onClick={setLocation}>
+                  <AddLocationIcon></AddLocationIcon>
+                </IconButton>
+              )}
               <Grid container item>
                 <TextValidator
                   fullWidth
@@ -254,6 +307,9 @@ AddPlaceForm.propTypes = {
   setMapHover: PropTypes.func,
   hoverCoordinates: PropTypes.string,
   dropped: PropTypes.bool,
+  mapHover: PropTypes.bool,
+  setDropped: PropTypes.func,
+  setVisible: PropTypes.func,
 };
 
 export default AddPlaceForm;

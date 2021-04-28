@@ -18,9 +18,10 @@ const Map = ({
   dropped,
   setHoverCoordinates,
   mapHover,
+  visible,
+  setVisible,
 }) => {
   const [latLng, setLatLng] = useState('');
-  const [visible, setVisible] = useState(false);
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
@@ -129,6 +130,8 @@ Map.propTypes = {
   setHoverCoordinates: PropTypes.func,
   setDropped: PropTypes.func,
   dropped: PropTypes.bool,
+  setVisible: PropTypes.func,
+  visible: PropTypes.bool,
 };
 
 export default Map;
