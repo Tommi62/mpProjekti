@@ -174,7 +174,7 @@ const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
                     <TextValidator
                       fullWidth
                       name="lat"
-                      value={inputs.address, hoverCoordinates.lat}
+                      value={(inputs.address, hoverCoordinates.lat)}
                       onChange={handleInputChange}
                       errorMessages={errorMessages.address}
                     />
@@ -183,13 +183,13 @@ const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
                     <TextValidator
                       fullWidth
                       name="lng"
-                      value={inputs.city, hoverCoordinates.lng}
+                      value={(inputs.city, hoverCoordinates.lng)}
                       onChange={handleInputChange}
                       errorMessages={errorMessages.city}
                     />
                   </Grid>
-                </>)
-              }
+                </>
+              )}
 
               <Button variant="outlined" onClick={setLocation}>
                 Point on map
@@ -245,7 +245,7 @@ const AddPlaceForm = ({onChange, setMapHover, hoverCoordinates, dropped}) => {
           <CircularProgress />
         )}
       </Grid>
-    </Grid >
+    </Grid>
   );
 };
 

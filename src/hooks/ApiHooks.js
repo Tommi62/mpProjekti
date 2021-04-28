@@ -3,7 +3,12 @@
 /* eslint-disable max-len */
 import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
-import {appIdentifier, baseUrl, getCoordsUrl, getAddressUrl} from '../utils/variables';
+import {
+  appIdentifier,
+  baseUrl,
+  getCoordsUrl,
+  getAddressUrl,
+} from '../utils/variables';
 
 // general function for fetching (options default value is empty object)
 const doFetch = async (url, options = {}) => {
@@ -363,7 +368,9 @@ const useCoordinates = () => {
   };
   const getReverseCoordinates = async (lat, lon) => {
     try {
-      const response = await doFetch(getAddressUrl + 'lat=' + lat + '&lon=' + lon);
+      const response = await doFetch(
+        getAddressUrl + 'lat=' + lat + '&lon=' + lon
+      );
       return response;
     } catch (e) {
       alert(e.message);

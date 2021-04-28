@@ -20,16 +20,14 @@ const PostComments = ({comments}) => {
     <List className={classes.list}>
       {comments.map((item) => (
         <Comment key={item.comment_id} comment={item}></Comment>
-      ))} {(comments == '') &&
-        <ListItem
-          alignItems="flex-start"
-          color="textSecondary">
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p">no comments</Typography>
+      ))}{' '}
+      {comments == '' && (
+        <ListItem alignItems="flex-start" color="textSecondary">
+          <Typography variant="body2" color="textSecondary" component="p">
+            no comments
+          </Typography>
         </ListItem>
-      }
+      )}
     </List>
   );
 };

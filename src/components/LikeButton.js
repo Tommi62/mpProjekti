@@ -7,7 +7,7 @@ import {useLikes} from '../hooks/ApiHooks';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const LikeButton = ({data, user}) => {
+const LikeButton = ({data, user, setChanged, changed}) => {
   let liked = 0;
   const {postLike, getLikes, deleteLike} = useLikes();
   const token = localStorage.getItem('token');
@@ -45,6 +45,7 @@ const LikeButton = ({data, user}) => {
       await deleteLike(token, id);
       parseLikes(id);
     }
+    setChanged(likes);
   };
 
   useEffect(() => {
@@ -57,11 +58,13 @@ const LikeButton = ({data, user}) => {
     <>
       {likedByUser ? (
         <IconButton onClick={toggleLike} color="secondary" aria-label="like">
-          {likes}<FavoriteIcon />
+          {likes}
+          <FavoriteIcon />
         </IconButton>
       ) : (
         <IconButton onClick={toggleLike} aria-label="like">
-          {likes}<FavoriteIcon />
+          {likes}
+          <FavoriteIcon />
         </IconButton>
       )}
     </>
@@ -71,6 +74,8 @@ const LikeButton = ({data, user}) => {
 LikeButton.propTypes = {
   data: PropTypes.object,
   user: PropTypes.object,
+  setChanged: PropTypes.func,
+  changed: PropTypes.number,
 };
 
 export default LikeButton;

@@ -95,10 +95,24 @@ const CommentSection = ({data, user, avatar}) => {
         <>
           <form onSubmit={handleSubmit} className={classes.form}>
             <div className={classes.margin}>
-              <Avatar alt={user.username} src={avatar} className={classes.small} />
-              <TextField id="input-with-icon-grid" value={comment} className={classes.commentInput} onInput={(e) => setComment(e.target.value)} />
+              <Avatar
+                alt={user.username}
+                src={avatar}
+                className={classes.small}
+              />
+              <TextField
+                id="input-with-icon-grid"
+                value={comment}
+                className={classes.commentInput}
+                onInput={(e) => setComment(e.target.value)}
+              />
 
-              <Button type="submit" variant="contained" color="disabled" className={classes.commentButton}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="disabled"
+                className={classes.commentButton}
+              >
                 <SendIcon />
               </Button>
             </div>

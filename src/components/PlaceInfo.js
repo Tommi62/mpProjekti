@@ -1,18 +1,25 @@
 /* eslint-disable max-len */
-import {Box, Card, CardHeader, CardMedia, Divider, Tabs, Typography} from '@material-ui/core';
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardMedia,
+  Divider,
+  Typography,
+} from '@material-ui/core';
 /* eslint-disable comma-dangle */
 /* eslint-disable indent */
 import {Avatar} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
 import {uploadsUrl} from '../utils/variables';
-import {useTag} from '../hooks/ApiHooks';
+import {useLikes, useTag} from '../hooks/ApiHooks';
 import LikeButton from './LikeButton';
 import CloseButton from './CloseButton';
 import CommentSection from './CommentSection';
 import {makeStyles} from '@material-ui/core/styles';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-
+import logo from '../gem-logo.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,14 +39,13 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-  },
+  avatar: {},
   address: {
     display: 'flex',
     alignItems: 'center',
     textTransform: 'capitalize',
     marginRight: 'auto',
-    padding: '9px'
+    padding: '9px',
   },
   addressIcon: {
     position: 'absolute',
@@ -47,10 +53,10 @@ const useStyles = makeStyles((theme) => ({
   },
   addressBox: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   likeBtn: {
-    marginLeft: 'auto'
+    marginLeft: 'auto',
   },
   desc: {
     padding: '16px',
@@ -64,7 +70,10 @@ const PlaceInfo = ({data, user, onChange}) => {
   const classes = useStyles();
   const [avatar, setAvatar] = useState('');
   const [myAvatar, setMyAvatar] = useState('');
+  const [changed, setChanged] = useState(0);
+  const [gem, setGem] = useState(false);
   const {getTag} = useTag();
+  const {getLikes} = useLikes();
 
   useEffect(() => {
     (async () => {
@@ -98,49 +107,79 @@ const PlaceInfo = ({data, user, onChange}) => {
     })();
   }, [data]);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        let likeCount = 0;
+        const postLikes = await getLikes(data.file_id);
+        postLikes.map((likeObject) => {
+          likeCount++;
+        });
+        if (likeCount >= 5) {
+          setGem(true);
+        } else {
+          setGem(false);
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
+    })();
+  }, [changed, data]);
+
   return (
     <>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable">
-        <Card variant="scrollable">
-          <CardHeader
-            avatar={
-              <Avatar
-                variant={'round'}
-                src={avatar}
-                style={{marginRight: '0.5rem'}}
-              />
-            }
-            action={
-              <CloseButton onChange={onChange} />
-            }
-            title={data.title}
-            subheader={data.username}
-          />
-          <CardMedia
-            className={classes.media}
-            image={uploadsUrl + data.file}
-          />
-          <Box className={classes.addressBox}>
-            <Box className={classes.address}>
-              <LocationOnIcon color="disabled" />
-              <Typography variant="body2" color="textSecondary" component="p">
-                {data.address}, {data.city}
-              </Typography>
-            </Box>
-            <LikeButton data={data} user={user} />
-          </Box>
-          <Divider />
-          <Box>
-            <Typography variant="body1" color="textPrimary" component="p" className={classes.desc}>
-              {data.description}
+      <Card>
+        <CardHeader
+          avatar={
+            <Avatar
+              variant={'circular'}
+              src={avatar}
+              style={{marginRight: '0.5rem'}}
+            />
+          }
+          action={<CloseButton onChange={onChange} />}
+          title={data.title}
+          subheader={data.username}
+        />
+        <CardMedia className={classes.media} image={uploadsUrl + data.file} />
+        <Box className={classes.addressBox}>
+          <Box className={classes.address}>
+            <LocationOnIcon color="disabled" />
+            <Typography variant="body2" color="textSecondary" component="p">
+              {data.address}, {data.city}
             </Typography>
           </Box>
-          <Divider />
-          <CommentSection data={data} user={user} avatar={myAvatar} />
-        </Card>
-      </Tabs>
+          {gem && (
+            <img
+              src={logo}
+              alt="hidden gem"
+              style={{
+                height: '3rem',
+                width: '3rem',
+              }}
+            />
+          )}
+          <LikeButton
+            data={data}
+            user={user}
+            setChanged={setChanged}
+            changed={changed}
+          />
+        </Box>
+        <Divider />
+        <Box>
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            component="p"
+            className={classes.desc}
+          >
+            {data.description}
+          </Typography>
+        </Box>
+        <Divider />
+        <CommentSection data={data} user={user} avatar={myAvatar} />
+      </Card>
     </>
   );
 };

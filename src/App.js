@@ -20,8 +20,7 @@ const theme = createMuiTheme({
       main: '#f44336',
     },
   },
-  typography: {
-  },
+  typography: {},
 });
 
 const App = () => {

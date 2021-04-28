@@ -62,7 +62,6 @@ const Nav = () => {
   const [avatar, setAvatar] = useState('');
   const {getTag} = useTag();
 
-
   useEffect(() => {
     const checkUser = async () => {
       try {
@@ -116,10 +115,10 @@ const Nav = () => {
             )}
           </div>
           <div className={classes.logo}>
-            <img style={
-              {height: '52px', width: '52px', marginRight: '6px'}
-            } src={logo}>
-            </img>
+            <img
+              style={{height: '52px', width: '52px', marginRight: '6px'}}
+              src={logo}
+            ></img>
             <Typography variant="h4" className={classes.logoText}>
               Hidden Gem
             </Typography>
@@ -127,9 +126,7 @@ const Nav = () => {
           <div className={classes.itemPack}>
             {user ? (
               <>
-                <Typography variant="h6">
-                  {user.username}
-                </Typography>
+                <Typography variant="h6">{user.username}</Typography>
                 <Avatar src={avatar} className={classes.avatar} />
                 <Button
                   className={classes.logout}
