@@ -1,32 +1,14 @@
 /* eslint-disable new-cap */
 /* eslint-disable require-jsdoc */
-import {useState} from 'react';
 import {MapContainer, TileLayer} from 'react-leaflet';
 import Search from './Search';
 import {OpenStreetMapProvider} from 'react-leaflet-geosearch';
 import MapMarkers from './MapMarkers';
 import PropTypes from 'prop-types';
-import {Button} from '@material-ui/core';
 import ChangeView from './ChangeView';
 
-const Map = ({onChange}) => {
-  const [initialPosition, setInitialPosition] = useState(null);
-  const [clicked, setClicked] = useState(false);
-
+const Map = ({onChange, initialPosition, clicked, setClicked}) => {
   const prov = OpenStreetMapProvider();
-
-  const buttonClicked = () => {
-    try {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const {latitude, longitude} = position.coords;
-        setInitialPosition([latitude, longitude]);
-        setClicked(true);
-      });
-    } catch (error) {
-      console.log(error.message);
-      alert('We did not find you.');
-    }
-  };
 
   return (
     <>
@@ -45,6 +27,7 @@ const Map = ({onChange}) => {
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          zIndex={-1}
         />
         <Search
           provider={prov}
@@ -58,15 +41,7 @@ const Map = ({onChange}) => {
           searchLabel={'Enter address, please'}
           keepResult={false}
         />
-        <Button
-          onClick={buttonClicked}
-          type="button"
-          color="primary"
-          variant="contained"
-          fullWidth
-        >
-          Lähetä
-        </Button>
+
         <MapMarkers onChange={onChange} />
       </MapContainer>
     </>
@@ -75,6 +50,9 @@ const Map = ({onChange}) => {
 
 Map.propTypes = {
   onChange: PropTypes.func,
+  initialPosition: PropTypes.array,
+  clicked: PropTypes.bool,
+  setClicked: PropTypes.func,
 };
 
 export default Map;

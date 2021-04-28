@@ -11,6 +11,8 @@ const Home = () => {
   const [user, setUser] = useContext(MediaContext);
   const [placeInfo, setPlaceInfo] = useState(false);
   const [startInfo, setStartInfo] = useState(false);
+  const [initialPosition, setInitialPosition] = useState(null);
+  const [clicked, setClicked] = useState(false);
   const {getUser} = useUsers();
 
   useEffect(() => {
@@ -71,13 +73,23 @@ const Home = () => {
               {startInfo ? (
                 <AddPlaceForm onChange={handleStartInfoChange} />
               ) : (
-                <StartInfo user={user} onChange={handleStartInfoChange} />
+                <StartInfo
+                  user={user}
+                  onChange={handleStartInfoChange}
+                  setInitialPosition={setInitialPosition}
+                  setClicked={setClicked}
+                />
               )}
             </>
           )}
         </Grid>
         <Grid item xs={9}>
-          <Map onChange={handleChange} />
+          <Map
+            onChange={handleChange}
+            initialPosition={initialPosition}
+            clicked={clicked}
+            setClicked={setClicked}
+          />
         </Grid>
       </Grid>
     </>

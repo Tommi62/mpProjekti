@@ -1,7 +1,8 @@
 import {Button, Grid, Typography} from '@material-ui/core';
 import PropTypes from 'prop-types';
+import LocationButton from './LocationButton';
 
-const StartInfo = ({user, onChange}) => {
+const StartInfo = ({user, onChange, setInitialPosition, setClicked}) => {
   const handleChange = () => {
     console.log('HandleChange');
     onChange(true);
@@ -37,7 +38,11 @@ const StartInfo = ({user, onChange}) => {
                 variant="contained"
                 aria-label="Add a place"
                 size="large"
-                style={{marginTop: '5rem', height: '3.5rem'}}
+                style={{
+                  marginTop: '5rem',
+                  marginBottom: '2rem',
+                  height: '3.5rem',
+                }}
               >
                 Add a place
               </Button>
@@ -67,6 +72,10 @@ const StartInfo = ({user, onChange}) => {
             </Grid>
           </>
         )}
+        <LocationButton
+          setInitialPosition={setInitialPosition}
+          setClicked={setClicked}
+        />
       </Grid>
     </>
   );
@@ -75,6 +84,8 @@ const StartInfo = ({user, onChange}) => {
 StartInfo.propTypes = {
   user: PropTypes.object,
   onChange: PropTypes.func,
+  setInitialPosition: PropTypes.func,
+  setClicked: PropTypes.func,
 };
 
 export default StartInfo;
