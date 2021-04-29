@@ -39,7 +39,9 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {},
+  avatar: {
+    marginRight: '0.5rem',
+  },
   address: {
     display: 'flex',
     alignItems: 'center',
@@ -64,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     whiteSpace: 'pre-line',
   },
+  headerTitle: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+  },
 }));
 
 const PlaceInfo = ({data, user, onChange}) => {
@@ -72,6 +78,7 @@ const PlaceInfo = ({data, user, onChange}) => {
   const [myAvatar, setMyAvatar] = useState('');
   const [changed, setChanged] = useState(0);
   const [gem, setGem] = useState(false);
+  const [multiplier, setMultiplier] = useState('');
   const {getTag} = useTag();
   const {getLikes} = useLikes();
 
@@ -115,10 +122,16 @@ const PlaceInfo = ({data, user, onChange}) => {
         postLikes.map((likeObject) => {
           likeCount++;
         });
-        if (likeCount >= 5) {
+        if (likeCount >= 2) {
           setGem(true);
+          if (likeCount / 2 >= 2) {
+            setMultiplier(Math.floor(likeCount / 2) + 'x');
+          } else {
+            setMultiplier('');
+          }
         } else {
           setGem(false);
+          setMultiplier('');
         }
       } catch (e) {
         console.log(e.message);
@@ -130,16 +143,13 @@ const PlaceInfo = ({data, user, onChange}) => {
     <>
       <Card>
         <CardHeader
-          avatar={
-            <Avatar
-              variant={'circular'}
-              src={avatar}
-              style={{marginRight: '0.5rem'}}
-            />
-          }
+          avatar={<Avatar variant={'circular'} src={avatar} />}
           action={<CloseButton onChange={onChange} />}
           title={data.title}
           subheader={data.username}
+          classes={{
+            title: classes.headerTitle,
+          }}
         />
         <CardMedia className={classes.media} image={uploadsUrl + data.file} />
         <Box className={classes.addressBox}>
@@ -149,6 +159,12 @@ const PlaceInfo = ({data, user, onChange}) => {
               {data.address}, {data.city}
             </Typography>
           </Box>
+          <Typography
+            variant="h5"
+            style={{color: '#297373', fontWeight: 'bold'}}
+          >
+            {multiplier}
+          </Typography>
           {gem && (
             <img
               src={logo}

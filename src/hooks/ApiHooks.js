@@ -300,7 +300,6 @@ const useLikes = () => {
 
   const getLikes = async (id) => {
     try {
-      console.log('getLikes id: ' + id);
       return await doFetch(baseUrl + 'ratings/file/' + id);
     } catch (e) {
       console.log('getting likes failed');
