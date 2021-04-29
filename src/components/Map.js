@@ -1,6 +1,11 @@
 /* eslint-disable new-cap */
-/* eslint-disable require-jsdoc */
-import {MapContainer, TileLayer, useMapEvents} from 'react-leaflet';
+
+import {
+  MapContainer,
+  TileLayer,
+  useMapEvents,
+  ZoomControl,
+} from 'react-leaflet';
 import Search from './Search';
 import {OpenStreetMapProvider} from 'react-leaflet-geosearch';
 import MapMarkers from './MapMarkers';
@@ -8,6 +13,7 @@ import PropTypes from 'prop-types';
 import ChangeView from './ChangeView';
 import {Marker} from 'react-leaflet';
 import {useState} from 'react';
+import LocationButton from './LocationButton';
 
 const Map = ({
   onChange,
@@ -20,6 +26,8 @@ const Map = ({
   mapHover,
   visible,
   setVisible,
+  setOpen,
+  setInitialPosition,
 }) => {
   const [latLng, setLatLng] = useState('');
 
@@ -68,7 +76,9 @@ const Map = ({
         center={[60.171831, 24.9412]}
         zoom={15}
         scrollWheelZoom={true}
-        style={{height: '100%', position: 'fixed', width: '75%'}}
+        style={{height: '100%', width: '100%', position: 'fixed'}}
+        zoomControl={false}
+        attributionControl={false}
       >
         <ChangeView
           center={initialPosition}
@@ -81,7 +91,9 @@ const Map = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           zIndex={-1}
         />
+        <ZoomControl position="topright" />
         <Search
+          position="topright"
           provider={prov}
           showMarker={false}
           showPopup={false}
@@ -93,7 +105,11 @@ const Map = ({
           searchLabel={'Enter address, please'}
           keepResult={false}
         />
-        <MapMarkers onChange={onChange} />
+        <MapMarkers onChange={onChange} setOpen={setOpen} />
+        <LocationButton
+          setInitialPosition={setInitialPosition}
+          setClicked={setClicked}
+        />
         <LocationMarker />
         {visible && (
           <Marker
@@ -132,6 +148,8 @@ Map.propTypes = {
   dropped: PropTypes.bool,
   setVisible: PropTypes.func,
   visible: PropTypes.bool,
+  setOpen: PropTypes.func,
+  setInitialPosition: PropTypes.func,
 };
 
 export default Map;

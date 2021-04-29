@@ -70,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.5rem',
     fontWeight: 'bold',
   },
+  card: {
+    overflowY: 'auto',
+  },
 }));
 
 const PlaceInfo = ({data, user, onChange}) => {
@@ -141,7 +144,7 @@ const PlaceInfo = ({data, user, onChange}) => {
 
   return (
     <>
-      <Card>
+      <Card className={classes.card}>
         <CardHeader
           avatar={<Avatar variant={'circular'} src={avatar} />}
           action={<CloseButton onChange={onChange} />}

@@ -5,7 +5,7 @@ import {Marker} from 'react-leaflet';
 import {useLikes} from '../hooks/ApiHooks';
 import {useEffect, useState} from 'react';
 
-const SingleMarker = ({onChange, item}) => {
+const SingleMarker = ({onChange, item, setOpen}) => {
   const {getLikes} = useLikes();
   const [hiddenGem, setHiddenGem] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -35,6 +35,12 @@ const SingleMarker = ({onChange, item}) => {
 
   const handleChange = (item) => {
     onChange(item, true);
+    setOpen(true);
+    if (update) {
+      setUpdate(false);
+    } else {
+      setUpdate(true);
+    }
   };
 
   useEffect(() => {
@@ -68,11 +74,6 @@ const SingleMarker = ({onChange, item}) => {
           eventHandlers={{
             click: () => {
               handleChange(item);
-              if (update) {
-                setUpdate(false);
-              } else {
-                setUpdate(true);
-              }
             },
           }}
         />
@@ -86,11 +87,6 @@ const SingleMarker = ({onChange, item}) => {
           eventHandlers={{
             click: () => {
               handleChange(item);
-              if (update) {
-                setUpdate(false);
-              } else {
-                setUpdate(true);
-              }
             },
           }}
         />
@@ -102,6 +98,7 @@ const SingleMarker = ({onChange, item}) => {
 SingleMarker.propTypes = {
   onChange: PropTypes.func,
   item: PropTypes.object,
+  setOpen: PropTypes.func,
 };
 
 export default SingleMarker;

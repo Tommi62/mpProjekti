@@ -1,8 +1,7 @@
 import {Button, Grid, Typography} from '@material-ui/core';
 import PropTypes from 'prop-types';
-import LocationButton from './LocationButton';
 
-const StartInfo = ({user, onChange, setInitialPosition, setClicked}) => {
+const StartInfo = ({user, onChange}) => {
   const handleChange = () => {
     console.log('HandleChange');
     onChange(true);
@@ -72,10 +71,6 @@ const StartInfo = ({user, onChange, setInitialPosition, setClicked}) => {
             </Grid>
           </>
         )}
-        <LocationButton
-          setInitialPosition={setInitialPosition}
-          setClicked={setClicked}
-        />
       </Grid>
     </>
   );
@@ -84,8 +79,6 @@ const StartInfo = ({user, onChange, setInitialPosition, setClicked}) => {
 StartInfo.propTypes = {
   user: PropTypes.object,
   onChange: PropTypes.func,
-  setInitialPosition: PropTypes.func,
-  setClicked: PropTypes.func,
 };
 
 export default StartInfo;
