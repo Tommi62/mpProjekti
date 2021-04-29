@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     whiteSpace: 'pre-line',
   },
+  card: {
+    overflowY: 'auto',
+  },
 }));
 
 const PlaceInfo = ({data, user, onChange}) => {
@@ -128,7 +131,7 @@ const PlaceInfo = ({data, user, onChange}) => {
 
   return (
     <>
-      <Card>
+      <Card className={classes.card}>
         <CardHeader
           avatar={
             <Avatar

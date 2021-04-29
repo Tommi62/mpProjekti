@@ -19,6 +19,9 @@ import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
 
 const useStyles = makeStyles((theme) => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
   root: {
     flexGrow: 1,
   },
@@ -94,7 +97,7 @@ const Nav = () => {
 
   return (
     <>
-      <AppBar>
+      <AppBar className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.itemPack}>
             <HomeIcon></HomeIcon>

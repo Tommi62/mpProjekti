@@ -3,7 +3,7 @@ import {Marker} from 'react-leaflet';
 import {useMedia} from '../hooks/ApiHooks';
 import PropTypes from 'prop-types';
 
-const MapMarkers = ({onChange}) => {
+const MapMarkers = ({onChange, setOpen}) => {
   const {picArray} = useMedia(true, false);
 
   const handleChange = (item) => {
@@ -20,6 +20,7 @@ const MapMarkers = ({onChange}) => {
       eventHandlers={{
         click: () => {
           handleChange(item);
+          setOpen(true);
         },
       }}
     />
@@ -28,6 +29,7 @@ const MapMarkers = ({onChange}) => {
 
 MapMarkers.propTypes = {
   onChange: PropTypes.func,
+  setOpen: PropTypes.func,
 };
 
 export default MapMarkers;
