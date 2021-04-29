@@ -13,7 +13,6 @@ import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import {grey} from '@material-ui/core/colors';
 
-
 const drawerWidth = 420;
 
 const SliderButton = withStyles((theme) => ({
@@ -237,8 +236,6 @@ const Home = () => {
               <StartInfo
                 user={user}
                 onChange={handleStartInfoChange}
-                setInitialPosition={setInitialPosition}
-                setClicked={setClicked}
               />
             )}
           </>
@@ -260,6 +257,7 @@ const Home = () => {
           initialPosition={initialPosition}
           drawerWidth={drawerWidth}
           setOpen={setOpen}
+          setInitialPosition={setInitialPosition}
         ></Map>
       </div>
     </>

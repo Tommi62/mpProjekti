@@ -13,6 +13,8 @@ import PropTypes from 'prop-types';
 import ChangeView from './ChangeView';
 import {Marker} from 'react-leaflet';
 import {useState} from 'react';
+import LocationButton from './LocationButton';
+
 
 const Map = ({
   onChange,
@@ -26,6 +28,7 @@ const Map = ({
   visible,
   setVisible,
   setOpen,
+  setInitialPosition,
 }) => {
   const [latLng, setLatLng] = useState('');
 
@@ -104,6 +107,10 @@ const Map = ({
           keepResult={false}
         />
         <MapMarkers onChange={onChange} setOpen={setOpen} />
+        <LocationButton
+          setInitialPosition={setInitialPosition}
+          setClicked={setClicked}
+        />
         <LocationMarker />
         {visible && (
           <Marker
@@ -143,6 +150,7 @@ Map.propTypes = {
   setVisible: PropTypes.func,
   visible: PropTypes.bool,
   setOpen: PropTypes.func,
+  setInitialPosition: PropTypes.func,
 };
 
 export default Map;
