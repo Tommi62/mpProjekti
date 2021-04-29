@@ -10,14 +10,15 @@ import {MediaProvider} from './contexts/MediaContext';
 import {Container} from '@material-ui/core';
 import useWindowDimensions from './hooks/WindowDimensionsHook';
 import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import {teal, red} from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#297373',
+      main: teal[600],
     },
     secondary: {
-      main: '#f44336',
+      main: red[800],
     },
   },
   typography: {},

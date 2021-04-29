@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 import {Link as RouterLink} from 'react-router-dom';
 import {useEffect, useContext, useState} from 'react';
 import {useUsers} from '../hooks/ApiHooks';
@@ -12,11 +13,23 @@ import {
   Avatar,
 } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import HomeIcon from '@material-ui/icons/Home';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import logo from '../gem-logo.svg';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
+import {withStyles} from '@material-ui/core/styles';
+import {teal} from '@material-ui/core/colors';
+
+const ProfileButton = withStyles((theme) => ({
+  root: {
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    color: theme.palette.getContrastText(teal[50]),
+    backgroundColor: teal[50],
+    '&:hover': {
+      backgroundColor: teal[200],
+    },
+  },
+}))(Button);
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -44,17 +57,29 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     display: 'flex',
     alignItems: 'center',
-    left: '50%',
+    left: '130px',
     transform: 'translate(-50%)',
   },
   logoText: {
     fontFamily: '"Pacifico", cursive',
+    fontSize: '2rem',
   },
   logout: {
-    paddingLeft: '24px',
+    borderTop: '1px solid #fefefe',
+    borderRight: '1px solid #fefefe',
+    borderBottom: '1px solid #fefefe',
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    height: '2.9rem',
+    paddingLeft: 15,
   },
   avatar: {
-    marginLeft: '12px',
+    marginLeft: '18px',
+    width: theme.spacing(4.2),
+    height: theme.spacing(4.2),
+  },
+  username: {
+    textTransform: 'capitalize',
   },
 }));
 
@@ -100,37 +125,32 @@ const Nav = () => {
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.itemPack}>
-            <HomeIcon></HomeIcon>
-            <Typography variant="h6" className={classes.title}>
-              <Link component={RouterLink} to="/" color="inherit">
-                Home
-              </Link>
-            </Typography>
-            {user && (
-              <>
-                <AccountBoxIcon></AccountBoxIcon>
-                <Typography variant="h6" className={classes.title}>
-                  <Link component={RouterLink} to="/profile" color="inherit">
-                    Profile
-                  </Link>
-                </Typography>
-              </>
-            )}
           </div>
-          <div className={classes.logo}>
+          <Link component={RouterLink} to="/"
+            className={classes.logo} color="inherit">
             <img
-              style={{height: '52px', width: '52px', marginRight: '6px'}}
+              style={{height: '52px', width: '52px', marginRight: '14px'}}
               src={logo}
             ></img>
             <Typography variant="h4" className={classes.logoText}>
               Hidden Gem
             </Typography>
-          </div>
+          </Link>
+
           <div className={classes.itemPack}>
             {user ? (
               <>
-                <Typography variant="h6">{user.username}</Typography>
-                <Avatar src={avatar} className={classes.avatar} />
+                <ProfileButton
+                  component={RouterLink}
+                  to="/profile"
+                  color="inherit"
+                  variant="body1"
+                >
+                  <Typography variant="h6" className={classes.username}>
+                    {user.username}
+                  </Typography>
+                  <Avatar src={avatar} className={classes.avatar} />
+                </ProfileButton>
                 <Button
                   className={classes.logout}
                   color="inherit"
