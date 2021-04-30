@@ -66,6 +66,15 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     whiteSpace: 'pre-line',
   },
+  gemDesc: {
+    padding: '16px',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    whiteSpace: 'pre-line',
+    border: '1px solid',
+    borderImageSlice: 1,
+    borderImageSource: 'linear-gradient(to left, #ffffff, #00897b)',
+  },
   headerTitle: {
     fontSize: '1.5rem',
     fontWeight: 'bold',
@@ -145,23 +154,47 @@ const PlaceInfo = ({data, user, onChange}) => {
   return (
     <>
       <Card className={classes.card}>
-        <CardHeader
-          avatar={<Avatar variant={'circular'} src={avatar} />}
-          action={<CloseButton onChange={onChange} />}
-          title={data.title}
-          subheader={data.username}
-          classes={{
-            title: classes.headerTitle,
-          }}
-        />
+        {gem ? (
+          <CardHeader
+            avatar={<Avatar variant={'circular'} src={avatar} />}
+            action={<CloseButton onChange={onChange} whiteIcon={true} />}
+            title={data.title}
+            subheader={data.username}
+            classes={{
+              title: classes.headerTitle,
+            }}
+            style={{
+              background: 'linear-gradient(45deg, #ffffff 30%, #26a69a 90%)',
+            }}
+          />
+        ) : (
+          <CardHeader
+            avatar={<Avatar variant={'circular'} src={avatar} />}
+            action={<CloseButton onChange={onChange} whiteIcon={false} />}
+            title={data.title}
+            subheader={data.username}
+            classes={{
+              title: classes.headerTitle,
+            }}
+          />
+        )}
         <CardMedia className={classes.media} image={uploadsUrl + data.file} />
         <Box className={classes.addressBox}>
-          <Box className={classes.address}>
-            <LocationOnIcon color="disabled" />
-            <Typography variant="body2" color="textSecondary" component="p">
-              {data.address}, {data.city}
-            </Typography>
-          </Box>
+          {gem ? (
+            <Box className={classes.address}>
+              <LocationOnIcon style={{color: '#00897b'}} />
+              <Typography variant="body2" color="primary" component="p">
+                {data.address}, {data.city}
+              </Typography>
+            </Box>
+          ) : (
+            <Box className={classes.address}>
+              <LocationOnIcon color="disabled" />
+              <Typography variant="body2" color="textSecondary" component="p">
+                {data.address}, {data.city}
+              </Typography>
+            </Box>
+          )}
           <Typography
             variant="h5"
             style={{color: '#297373', fontWeight: 'bold'}}
@@ -186,16 +219,29 @@ const PlaceInfo = ({data, user, onChange}) => {
           />
         </Box>
         <Divider />
-        <Box>
-          <Typography
-            variant="body1"
-            color="textPrimary"
-            component="p"
-            className={classes.desc}
-          >
-            {data.description}
-          </Typography>
-        </Box>
+        {gem ? (
+          <Box>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              component="p"
+              className={classes.gemDesc}
+            >
+              {data.description}
+            </Typography>
+          </Box>
+        ) : (
+          <Box>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              component="p"
+              className={classes.desc}
+            >
+              {data.description}
+            </Typography>
+          </Box>
+        )}
         <Divider />
         <CommentSection data={data} user={user} avatar={myAvatar} />
       </Card>
