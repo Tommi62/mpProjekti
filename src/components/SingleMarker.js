@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import * as L from 'leaflet';
-import logo from '../gem-logo.svg';
+import logo from '../gem-logo2.svg';
 import {Marker} from 'react-leaflet';
 import {useLikes} from '../hooks/ApiHooks';
 import {useEffect, useState} from 'react';

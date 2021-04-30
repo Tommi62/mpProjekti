@@ -19,7 +19,9 @@ import CloseButton from './CloseButton';
 import CommentSection from './CommentSection';
 import {makeStyles} from '@material-ui/core/styles';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import logo from '../gem-logo.svg';
+import logo from '../post-gem-logo.svg';
+import logoDisabled from '../post-gem-logo-disabled.svg';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -137,7 +139,7 @@ const PlaceInfo = ({data, user, onChange}) => {
         if (likeCount >= 2) {
           setGem(true);
           if (likeCount / 2 >= 2) {
-            setMultiplier(Math.floor(likeCount / 2) + 'x');
+            setMultiplier(Math.floor(likeCount / 2));
           } else {
             setMultiplier('');
           }
@@ -197,17 +199,27 @@ const PlaceInfo = ({data, user, onChange}) => {
           )}
           <Typography
             variant="h5"
-            style={{color: '#297373', fontWeight: 'bold'}}
+            style={{color: '#297373'}}
           >
             {multiplier}
           </Typography>
-          {gem && (
+          {gem ? (
             <img
               src={logo}
               alt="hidden gem"
               style={{
-                height: '3rem',
-                width: '3rem',
+                height: '1.8rem',
+                width: '1.8rem',
+                marginLeft: '-2px',
+              }}
+            />
+          ) : (
+            <img
+              src={logoDisabled}
+              alt="hidden gem"
+              style={{
+                height: '1.8rem',
+                width: '1.8rem'
               }}
             />
           )}

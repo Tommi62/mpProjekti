@@ -13,7 +13,7 @@ import {
   Avatar,
 } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import logo from '../gem-logo.svg';
+import logo from '../gem-logo2.svg';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
 import {withStyles} from '@material-ui/core/styles';
@@ -132,7 +132,7 @@ const Nav = () => {
             color="inherit"
           >
             <img
-              style={{height: '52px', width: '52px', marginRight: '14px'}}
+              style={{height: '4rem', width: '4rem', marginRight: '14px'}}
               src={logo}
             ></img>
             <Typography variant="h4" className={classes.logoText}>
