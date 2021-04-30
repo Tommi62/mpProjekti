@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import CloseButton from './CloseButton';
 import {IconButton} from '@material-ui/core';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
+import Card from '@material-ui/core/Card';
 
 const AddPlaceForm = ({
   onChange,
@@ -71,9 +72,9 @@ const AddPlaceForm = ({
       } else {
         console.log(
           'coords and state: ' +
-            hoverCoordinates.lat +
-            ' ' +
-            hoverCoordinates.lng
+          hoverCoordinates.lat +
+          ' ' +
+          hoverCoordinates.lng
         );
         const address = await getReverseCoordinates(
           hoverCoordinates.lat,
@@ -165,139 +166,156 @@ const AddPlaceForm = ({
       <Grid container justify="flex-end">
         <CloseButton onChange={onChange} />
       </Grid>
-      <Grid item xs={12}>
-        <Typography component="h1" variant="h2" gutterBottom align="center">
+      <Card style={{
+        margin: '1rem',
+        padding: '2rem 2rem',
+        position: 'relative',
+      }}>
+        <Typography component="h1" variant="h4" gutterBottom align="center">
           Add a place
         </Typography>
-      </Grid>
-      <Grid item xs={6}>
         {!loading ? (
           <ValidatorForm onSubmit={handleSubmit}>
-            <Grid container>
-              <Grid container item>
+            <TextValidator
+              fullWidth
+              name="title"
+              label="Title"
+              value={inputs.title}
+              onChange={handleInputChange}
+              validators={validators.title}
+              errorMessages={errorMessages.title}
+            />
+            {dropped ? (
+              <>
                 <TextValidator
                   fullWidth
-                  name="title"
-                  label="Title"
-                  value={inputs.title}
+                  name="address"
+                  label="Address"
+                  value={inputs.address}
                   onChange={handleInputChange}
-                  validators={validators.title}
-                  errorMessages={errorMessages.title}
+                  validators={validators.address}
+                  errorMessages={errorMessages.address}
                 />
-              </Grid>
-              {dropped ? (
-                <>
-                  <Grid container item>
-                    <TextValidator
-                      fullWidth
-                      name="address"
-                      label="Address"
-                      value={inputs.address}
-                      onChange={handleInputChange}
-                      validators={validators.address}
-                      errorMessages={errorMessages.address}
-                    />
-                  </Grid>
-                  <Grid container item>
-                    <TextValidator
-                      fullWidth
-                      name="city"
-                      label="City"
-                      value={inputs.city}
-                      onChange={handleInputChange}
-                      validators={validators.city}
-                      errorMessages={errorMessages.city}
-                    />
-                  </Grid>
-                </>
-              ) : (
-                <>
-                  <Grid container item>
-                    <TextValidator
-                      fullWidth
-                      name="address"
-                      label="Address"
-                      disabled
-                      onChange={handleInputChange}
-                      errorMessages={errorMessages.address}
-                    />
-                  </Grid>
-                  <Grid container item>
-                    <TextValidator
-                      fullWidth
-                      name="city"
-                      label="City"
-                      disabled
-                      onChange={handleInputChange}
-                      errorMessages={errorMessages.city}
-                    />
-                  </Grid>
-                </>
-              )}
-              {mapHover ? (
-                <IconButton
-                  aria-label="location"
-                  color="primary"
-                  onClick={setLocation}
-                >
-                  <AddLocationIcon></AddLocationIcon>
-                </IconButton>
-              ) : (
-                <IconButton aria-label="location" onClick={setLocation}>
-                  <AddLocationIcon></AddLocationIcon>
-                </IconButton>
-              )}
-              <Grid container item>
                 <TextValidator
-                  fullWidth
-                  name="description"
-                  label="Description"
-                  value={inputs.description}
+                  name="city"
+                  label="City"
+                  value={inputs.city}
                   onChange={handleInputChange}
-                  validators={validators.description}
-                  errorMessages={errorMessages.description}
+                  validators={validators.city}
+                  errorMessages={errorMessages.city}
                 />
-              </Grid>
-              <Grid container item>
+                {mapHover ? (
+                  <IconButton
+                    aria-label="location"
+                    color="secondary"
+                    onClick={setLocation}
+                    style={{
+                      position: 'absolute',
+                      right: '1.5rem',
+                      top: '12rem',
+                    }}
+                  >
+                    <AddLocationIcon></AddLocationIcon>
+                  </IconButton>
+                ) : (
+                  <IconButton aria-label="location" onClick={setLocation}
+                    style={{
+                      position: 'absolute',
+                      right: '1.5rem',
+                      top: '12rem',
+                    }}
+                  >
+                    <AddLocationIcon></AddLocationIcon>
+                  </IconButton>
+                )}
+              </>
+            ) : (
+              <>
                 <TextValidator
                   fullWidth
-                  type="file"
-                  name="file"
-                  accept="image/*, audio/*, video/*"
-                  onChange={handleFileChange}
+                  name="address"
+                  label="Address"
+                  disabled
+                  onChange={handleInputChange}
+                  errorMessages={errorMessages.address}
                 />
-              </Grid>
-              <Grid container item>
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  fullWidth
-                >
-                  Lähetä
+                <TextValidator
+                  name="city"
+                  label="City"
+                  disabled
+                  onChange={handleInputChange}
+                  errorMessages={errorMessages.city}
+                />
+                {mapHover ? (
+                  <IconButton
+                    aria-label="location"
+                    color="secondary"
+                    onClick={setLocation}
+                    style={{
+                      position: 'absolute',
+                      right: '1.5rem',
+                      top: '12rem',
+                    }}
+                  >
+                    <AddLocationIcon></AddLocationIcon>
+                  </IconButton>
+                ) : (
+                  <IconButton aria-label="location" onClick={setLocation}
+                    style={{
+                      position: 'absolute',
+                      right: '1.5rem',
+                      top: '12rem',
+                    }}
+                  >
+                    <AddLocationIcon></AddLocationIcon>
+                  </IconButton>
+                )}
+              </>
+            )}
+            <TextValidator
+              fullWidth
+              name="description"
+              label="Description"
+              value={inputs.description}
+              onChange={handleInputChange}
+              validators={validators.description}
+              errorMessages={errorMessages.description}
+            />
+            <TextValidator
+              fullWidth
+              style={{marginTop: '1rem'}}
+              type="file"
+              name="file"
+              accept="image/*, audio/*, video/*"
+              onChange={handleFileChange}
+            />
+            {inputs.dataUrl.length > 0 && (
+              <>
+                <img
+                  src={inputs.dataUrl}
+                  style={{
+                    maxWidth: '50%',
+                    marginLeft: '25%',
+                    marginBottom: '2rem',
+                    marginTop: '2rem',
+                  }}
+                />
+              </>
+            )}
+            <Button
+              style={{marginTop: '2rem'}}
+              type="submit"
+              color="primary"
+              variant="contained"
+              fullWidth
+            >
+              Lähetä
                 </Button>
-              </Grid>
-              {inputs.dataUrl.length > 0 && (
-                <>
-                  <Grid item xs={12}>
-                    <img
-                      src={inputs.dataUrl}
-                      style={{
-                        maxWidth: '50%',
-                        marginLeft: '25%',
-                        marginBottom: '2rem',
-                        marginTop: '2rem',
-                      }}
-                    />
-                  </Grid>
-                </>
-              )}
-            </Grid>
           </ValidatorForm>
         ) : (
           <CircularProgress />
         )}
-      </Grid>
+      </Card>
     </Grid>
   );
 };
