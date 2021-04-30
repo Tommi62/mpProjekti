@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import * as L from 'leaflet';
 import logo from '../gem-logo2.svg';
+import gemMarker from '../gem-marker.png';
 import {Marker} from 'react-leaflet';
 import {useLikes} from '../hooks/ApiHooks';
 import {useEffect, useState} from 'react';
@@ -22,13 +23,12 @@ const SingleMarker = ({onChange, item, setOpen}) => {
     shadowSize: [41, 41],
   });
 
-  const blueIcon = new LeafIcon({
-    iconUrl:
-      'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+  const greyIcon = new LeafIcon({
+    iconUrl: gemMarker,
     shadowUrl:
       'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconSize: [32, 42],
+    iconAnchor: [15, 44],
     popupAnchor: [1, -34],
     shadowSize: [41, 41],
   });
@@ -79,7 +79,7 @@ const SingleMarker = ({onChange, item, setOpen}) => {
         />
       ) : (
         <Marker
-          icon={blueIcon}
+          icon={greyIcon}
           position={[
             JSON.parse(item.description).lat,
             JSON.parse(item.description).lng,

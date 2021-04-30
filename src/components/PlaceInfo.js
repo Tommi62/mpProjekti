@@ -22,7 +22,6 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import logo from '../post-gem-logo.svg';
 import logoDisabled from '../post-gem-logo-disabled.svg';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -197,10 +196,7 @@ const PlaceInfo = ({data, user, onChange}) => {
               </Typography>
             </Box>
           )}
-          <Typography
-            variant="h5"
-            style={{color: '#297373'}}
-          >
+          <Typography variant="h5" style={{color: '#297373'}}>
             {multiplier}
           </Typography>
           {gem ? (
@@ -219,7 +215,7 @@ const PlaceInfo = ({data, user, onChange}) => {
               alt="hidden gem"
               style={{
                 height: '1.8rem',
-                width: '1.8rem'
+                width: '1.8rem',
               }}
             />
           )}
