@@ -5,7 +5,7 @@ import {GridListTileBar} from '@material-ui/core';
 import {withRouter} from 'react-router-dom';
 import ProfileModal from './ProfileModal';
 
-const MediaRow = ({file, ownFiles, history, deleteMedia}) => {
+const MediaRow = ({file, ownFiles, user}) => {
   let desc = {}; // jos kuva tallennettu ennen week4C, description ei ole JSONia
   try {
     desc = JSON.parse(file.description);
@@ -13,7 +13,6 @@ const MediaRow = ({file, ownFiles, history, deleteMedia}) => {
   } catch (e) {
     desc = {description: file.description};
   }
-
   return (
     <>
       <img src={uploadsUrl + file.thumbnails?.w320} alt={file.title} />
@@ -38,8 +37,7 @@ const MediaRow = ({file, ownFiles, history, deleteMedia}) => {
 MediaRow.propTypes = {
   file: PropTypes.object,
   ownFiles: PropTypes.bool,
-  history: PropTypes.object,
-  deleteMedia: PropTypes.func,
+  user: PropTypes.object,
 };
 
 export default withRouter(MediaRow);

@@ -27,10 +27,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MediaTable = ({ownFiles}) => {
+const MediaTable = ({ownFiles, user}) => {
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:697px)');
-
   const {picArray, loading, deleteMedia} = useMedia(true, ownFiles);
 
   console.log('MediaTable', picArray);
@@ -47,13 +46,16 @@ const MediaTable = ({ownFiles}) => {
         </GridListTile>
         {!loading ? (
           picArray.map((item) => (
-            <GridListTile key={item.file_id}>
-              <MediaRow
-                file={item}
-                ownFiles={ownFiles}
-                deleteMedia={deleteMedia}
-              />
-            </GridListTile>
+            (user.username == JSON.parse(item.description).username) && (
+              <GridListTile key={item.file_id} >
+                <MediaRow
+                  file={item}
+                  ownFiles={ownFiles}
+                  deleteMedia={deleteMedia}
+                  user={user}
+                />
+              </GridListTile>
+            )
           ))
         ) : (
           <GridListTile>
@@ -61,12 +63,13 @@ const MediaTable = ({ownFiles}) => {
           </GridListTile>
         )}
       </GridList>
-    </div>
+    </div >
   );
 };
 
 MediaTable.propTypes = {
   ownFiles: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 export default MediaTable;

@@ -91,7 +91,7 @@ const Profile = () => {
           <ProfileForm user={user} setUser={setUser} setUpdate={setUpdate} />
         </Grid>
       )}
-      <MediaTable ownFiles={true} />
+      <MediaTable ownFiles={true} user={user} />
     </>
   );
 };

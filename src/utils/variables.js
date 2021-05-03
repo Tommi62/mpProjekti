@@ -6,4 +6,11 @@ const getCoordsUrl =
 const getAddressUrl =
   'https://nominatim.openstreetmap.org/reverse?format=json&';
 
-export {baseUrl, uploadsUrl, appIdentifier, getCoordsUrl, getAddressUrl};
+
+export {
+  baseUrl,
+  uploadsUrl,
+  appIdentifier,
+  getCoordsUrl,
+  getAddressUrl,
+};

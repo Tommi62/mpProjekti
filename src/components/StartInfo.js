@@ -15,15 +15,15 @@ const StartInfo = ({user, onChange}) => {
             <Grid container justify="center" style={{marginTop: '2rem'}}>
               <Typography
                 component="h1"
-                variant="h2"
+                variant="h4"
                 gutterBottom
                 align="center"
               >
                 Hello {user.username}!
               </Typography>
               <Typography
-                component="h5"
-                variant="h5"
+                component="p"
+                variant="p"
                 align="center"
                 style={{margin: '1rem'}}
               >
@@ -38,7 +38,7 @@ const StartInfo = ({user, onChange}) => {
                 aria-label="Add a place"
                 size="large"
                 style={{
-                  marginTop: '5rem',
+                  marginTop: '2rem',
                   marginBottom: '2rem',
                   height: '3.5rem',
                 }}
@@ -52,15 +52,15 @@ const StartInfo = ({user, onChange}) => {
             <Grid container justify="center" style={{marginTop: '2rem'}}>
               <Typography
                 component="h1"
-                variant="h2"
+                variant="h4"
                 gutterBottom
                 align="center"
               >
                 Hello stranger!
               </Typography>
               <Typography
-                component="h5"
-                variant="h5"
+                component="p"
+                variant="p"
                 align="center"
                 style={{margin: '1rem'}}
               >
