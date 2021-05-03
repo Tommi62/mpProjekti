@@ -11,6 +11,7 @@ import {
   Button,
   Link,
   Avatar,
+  useMediaQuery,
 } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import logo from '../gem-logo2.svg';
@@ -18,6 +19,7 @@ import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
 import {withStyles} from '@material-ui/core/styles';
 import {teal} from '@material-ui/core/colors';
+import {useTheme} from '@material-ui/core/styles';
 
 const ProfileButton = withStyles((theme) => ({
   root: {
@@ -64,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: '"Pacifico", cursive',
     fontSize: '2rem',
   },
+  logoTextHidden: {
+    fontFamily: '"Pacifico", cursive',
+    fontSize: '2rem',
+    visibility: 'hidden',
+  },
   logout: {
     borderTop: '1px solid #fefefe',
     borderRight: '1px solid #fefefe',
@@ -85,7 +92,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Nav = () => {
   const classes = useStyles();
+  const theme = useTheme();
   const [user, setUser] = useContext(MediaContext);
+  const breakpoint = useMediaQuery(theme.breakpoints.up('sm'));
   const {getUser} = useUsers();
   const [avatar, setAvatar] = useState('');
   const {getTag} = useTag();
@@ -135,7 +144,10 @@ const Nav = () => {
               style={{height: '4rem', width: '4rem', marginRight: '14px'}}
               src={logo}
             ></img>
-            <Typography variant="h4" className={classes.logoText}>
+            <Typography
+              variant="h4"
+              className={breakpoint ? classes.logoText : classes.logoTextHidden}
+            >
               Hidden Gem
             </Typography>
           </Link>

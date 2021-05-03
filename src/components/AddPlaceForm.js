@@ -51,6 +51,13 @@ const AddPlaceForm = ({
     })();
   }, []);
 
+  // do when unmounted.
+  useEffect(() => {
+    return () => {
+      disableMarker();
+    };
+  }, []);
+
   const doUpload = async () => {
     let desc = {};
     const fd = new FormData();
@@ -166,6 +173,12 @@ const AddPlaceForm = ({
 
   const handleChange = () => {
     onChange(false);
+  };
+
+  const disableMarker = () => {
+    setDropped(true);
+    setVisible(false);
+    setMapHover(false);
   };
 
   const setLocation = () => {

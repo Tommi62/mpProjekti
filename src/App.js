@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable require-jsdoc */
 /* eslint-disable max-len */
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
@@ -7,10 +8,11 @@ import Profile from './views/Profile';
 import Login from './views/Login';
 import Logout from './views/Logout';
 import {MediaProvider} from './contexts/MediaContext';
-import {Container} from '@material-ui/core';
+import {Container, useMediaQuery} from '@material-ui/core';
 import useWindowDimensions from './hooks/WindowDimensionsHook';
 import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import {teal, red} from '@material-ui/core/colors';
+import {useTheme} from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -25,6 +27,8 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
+  const tehme = useTheme();
+  const breakpoint = useMediaQuery(tehme.breakpoints.up('sm'));
   const {height} = useWindowDimensions();
   const heightCorrected = height - 65;
 
@@ -34,10 +38,21 @@ const App = () => {
         <MediaProvider>
           <Container
             maxWidth="xl"
-            style={{margin: 0, padding: 0, height: heightCorrected}}
+            style={{
+              margin: 0,
+              padding: 0,
+              height: heightCorrected,
+              overflow: 'hidden',
+            }}
           >
             <Nav />
-            <main style={{marginTop: 65, height: '100%'}}>
+            <main
+              style={
+                breakpoint
+                  ? {marginTop: 65, height: '100%'}
+                  : {marginTop: 56, height: '100%'}
+              }
+            >
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/login" component={Login} />

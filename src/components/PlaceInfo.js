@@ -5,7 +5,9 @@ import {
   CardHeader,
   CardMedia,
   Divider,
+  Modal,
   Typography,
+  useMediaQuery,
 } from '@material-ui/core';
 /* eslint-disable comma-dangle */
 /* eslint-disable indent */
@@ -21,6 +23,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import logo from '../post-gem-logo.svg';
 import logoDisabled from '../post-gem-logo-disabled.svg';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import {IconButton} from '@material-ui/core';
+import {useTheme} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  modalMedia: {
+    height: '50%',
+    width: '50%',
     paddingTop: '56.25%', // 16:9
   },
   expand: {
@@ -78,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
   },
   headerTitle: {
     fontSize: '1.5rem',
-    fontWeight: 'bold',
   },
   card: {
     overflowY: 'auto',
@@ -92,8 +101,11 @@ const PlaceInfo = ({data, user, onChange}) => {
   const [changed, setChanged] = useState(0);
   const [gem, setGem] = useState(false);
   const [multiplier, setMultiplier] = useState('');
+  const [open, setOpen] = useState(false);
   const {getTag} = useTag();
   const {getLikes} = useLikes();
+  const theme = useTheme();
+  const breakpoint = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
     (async () => {
@@ -152,9 +164,20 @@ const PlaceInfo = ({data, user, onChange}) => {
     })();
   }, [changed, data]);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <>
-      <Card className={classes.card}>
+      <Card
+        className={classes.card}
+        style={breakpoint ? {marginBottom: '64px'} : {marginBottom: '0px'}}
+      >
         {gem ? (
           <CardHeader
             avatar={<Avatar variant={'circular'} src={avatar} />}
@@ -180,22 +203,57 @@ const PlaceInfo = ({data, user, onChange}) => {
           />
         )}
         <CardMedia className={classes.media} image={uploadsUrl + data.file} />
+        <div
+          style={{
+            position: 'relative',
+          }}
+        >
+          <IconButton
+            aria-label={`show post`}
+            className={classes.icon}
+            onClick={handleOpen}
+            style={{
+              position: 'absolute',
+              right: 3,
+              top: -49,
+            }}
+          >
+            <FullscreenIcon fontSize="medium" />
+          </IconButton>
+        </div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {
+            <Card
+              className={classes.root}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                zIndex: 'auto',
+                width: '50%',
+                maxWidth: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <CardMedia
+                className={classes.media}
+                image={uploadsUrl + data.file}
+              />
+            </Card>
+          }
+        </Modal>
         <Box className={classes.addressBox}>
-          {gem ? (
-            <Box className={classes.address}>
-              <LocationOnIcon style={{color: '#00897b'}} />
-              <Typography variant="body2" color="primary" component="p">
-                {data.address}, {data.city}
-              </Typography>
-            </Box>
-          ) : (
-            <Box className={classes.address}>
-              <LocationOnIcon color="disabled" />
-              <Typography variant="body2" color="textSecondary" component="p">
-                {data.address}, {data.city}
-              </Typography>
-            </Box>
-          )}
+          <Box className={classes.address}>
+            <LocationOnIcon color="disabled" />
+            <Typography variant="body2" color="textSecondary" component="p">
+              {data.address}, {data.city}
+            </Typography>
+          </Box>
           <Typography variant="h5" style={{color: '#297373'}}>
             {multiplier}
           </Typography>

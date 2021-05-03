@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable indent */
 import MediaRow from './MediaRow';
 import {useMedia} from '../hooks/ApiHooks';
 import {
@@ -28,10 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MediaTable = ({ownFiles}) => {
+const MediaTable = ({ownFiles, user}) => {
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:697px)');
-
   const {picArray, loading, deleteMedia} = useMedia(true, ownFiles);
 
   console.log('MediaTable', picArray);
@@ -47,15 +48,19 @@ const MediaTable = ({ownFiles}) => {
           <ListSubheader component="div">Own posts</ListSubheader>
         </GridListTile>
         {!loading ? (
-          picArray.map((item) => (
-            <GridListTile key={item.file_id}>
-              <MediaRow
-                file={item}
-                ownFiles={ownFiles}
-                deleteMedia={deleteMedia}
-              />
-            </GridListTile>
-          ))
+          picArray.map(
+            (item) =>
+              user.username == JSON.parse(item.description).username && (
+                <GridListTile key={item.file_id}>
+                  <MediaRow
+                    file={item}
+                    ownFiles={ownFiles}
+                    deleteMedia={deleteMedia}
+                    user={user}
+                  />
+                </GridListTile>
+              )
+          )
         ) : (
           <GridListTile>
             <Grid container justify="center">
@@ -70,6 +75,7 @@ const MediaTable = ({ownFiles}) => {
 
 MediaTable.propTypes = {
   ownFiles: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 export default MediaTable;
