@@ -2,6 +2,7 @@ import MediaRow from './MediaRow';
 import {useMedia} from '../hooks/ApiHooks';
 import {
   CircularProgress,
+  Grid,
   GridList,
   GridListTile,
   ListSubheader,
@@ -43,7 +44,7 @@ const MediaTable = ({ownFiles}) => {
         cols={matches ? 6 : 2}
       >
         <GridListTile key="Subheader" cols={6} style={{height: 'auto'}}>
-          <ListSubheader component="div">All Media</ListSubheader>
+          <ListSubheader component="div">Own posts</ListSubheader>
         </GridListTile>
         {!loading ? (
           picArray.map((item) => (
@@ -57,7 +58,9 @@ const MediaTable = ({ownFiles}) => {
           ))
         ) : (
           <GridListTile>
-            <CircularProgress />
+            <Grid container justify="center">
+              <CircularProgress />
+            </Grid>
           </GridListTile>
         )}
       </GridList>

@@ -10,6 +10,7 @@ import CloseButton from './CloseButton';
 import {IconButton} from '@material-ui/core';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import Card from '@material-ui/core/Card';
+import {placeHolder} from '../utils/variables';
 
 const AddPlaceForm = ({
   onChange,
@@ -95,7 +96,18 @@ const AddPlaceForm = ({
         };
       }
       fd.append('description', JSON.stringify(desc));
-      fd.append('file', inputs.file);
+      if (inputs.file !== null) {
+        if (inputs.file.type.includes('image')) {
+          fd.append('file', inputs.file);
+        } else {
+          throw new Error(
+            'Looks like you are trying to send something other than an image.'
+          );
+        }
+      } else {
+        throw new Error('Choose an image!');
+      }
+
       const result = await postMedia(fd, localStorage.getItem('token'));
       const tagResult = await postTag(
         localStorage.getItem('token'),
@@ -126,24 +138,29 @@ const AddPlaceForm = ({
   });
 
   useEffect(() => {
-    const reader = new FileReader();
+    try {
+      const reader = new FileReader();
 
-    reader.addEventListener('load', () => {
-      setInputs((inputs) => ({
-        ...inputs,
-        dataUrl: reader.result,
-      }));
-    });
-
-    if (inputs.file !== null) {
-      if (inputs.file.type.includes('image')) {
-        reader.readAsDataURL(inputs.file);
-      } else {
+      reader.addEventListener('load', () => {
         setInputs((inputs) => ({
           ...inputs,
-          dataUrl: 'logo512.png',
+          dataUrl: reader.result,
         }));
+      });
+
+      if (inputs.file !== null) {
+        if (inputs.file.type.includes('image')) {
+          reader.readAsDataURL(inputs.file);
+        } else {
+          alert('Only images are allowed!');
+          setInputs((inputs) => ({
+            ...inputs,
+            dataUrl: placeHolder,
+          }));
+        }
       }
+    } catch (error) {
+      console.log(error.message);
     }
   }, [inputs.file]);
 
@@ -292,7 +309,7 @@ const AddPlaceForm = ({
               style={{marginTop: '1rem'}}
               type="file"
               name="file"
-              accept="image/*, audio/*, video/*"
+              accept="image/*"
               onChange={handleFileChange}
             />
             {inputs.dataUrl.length > 0 && (
@@ -319,7 +336,9 @@ const AddPlaceForm = ({
             </Button>
           </ValidatorForm>
         ) : (
-          <CircularProgress />
+          <Grid container justify="center">
+            <CircularProgress />
+          </Grid>
         )}
       </Card>
     </Grid>

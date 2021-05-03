@@ -48,43 +48,51 @@ const Profile = () => {
   return (
     <>
       <BackButton />
-      <Typography component="h1" variant="h2" gutterBottom>
+      <Typography component="h1" variant="h2" gutterBottom align="center">
         Profile
       </Typography>
       {user && (
-        <Card>
-          <CardContent>
-            <List>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar variant={'square'} src={avatar} />
-                </ListItemAvatar>
-                <ListItemText primary={user.username} />
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <EmailIcon />
-                </ListItemIcon>
-                <ListItemText primary={user.email} />
-              </ListItem>
-              <ListItem
-                button
-                onClick={() => {
-                  setToggleForm(!toggleForm);
-                }}
-              >
-                <ListItemIcon>
-                  <CreateIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    toggleForm ? 'Close update profile' : 'Update profile'
-                  }
-                />
-              </ListItem>
-            </List>
-          </CardContent>
-        </Card>
+        <Grid container justify="center">
+          <Card
+            style={{
+              width: '30%',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <CardContent>
+              <List>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar variant={'circular'} src={avatar} />
+                  </ListItemAvatar>
+                  <ListItemText primary={user.username} />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <EmailIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={user.email} />
+                </ListItem>
+                <ListItem
+                  button
+                  onClick={() => {
+                    setToggleForm(!toggleForm);
+                  }}
+                >
+                  <ListItemIcon>
+                    <CreateIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      toggleForm ? 'Close update profile' : 'Update profile'
+                    }
+                  />
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
+        </Grid>
       )}
       {toggleForm && (
         <Grid>

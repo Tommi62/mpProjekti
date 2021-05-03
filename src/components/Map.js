@@ -14,6 +14,8 @@ import ChangeView from './ChangeView';
 import {Marker} from 'react-leaflet';
 import {useState} from 'react';
 import LocationButton from './LocationButton';
+import * as L from 'leaflet';
+import gemMarker from '../gem-marker.png';
 
 const Map = ({
   onChange,
@@ -30,6 +32,20 @@ const Map = ({
   setInitialPosition,
 }) => {
   const [latLng, setLatLng] = useState('');
+
+  const LeafIcon = L.Icon.extend({
+    options: {},
+  });
+
+  const greyIcon = new LeafIcon({
+    iconUrl: gemMarker,
+    shadowUrl:
+      'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [32, 42],
+    iconAnchor: [15, 44],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
@@ -114,6 +130,7 @@ const Map = ({
         {visible && (
           <Marker
             draggable={'true'}
+            icon={greyIcon}
             eventHandlers={{
               dragend: (event) => {
                 setHoverCoordinates({

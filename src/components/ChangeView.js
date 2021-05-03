@@ -1,4 +1,4 @@
-import {Marker, Popup, useMap} from 'react-leaflet';
+import {Marker, Tooltip, useMap} from 'react-leaflet';
 import PropTypes from 'prop-types';
 import * as L from 'leaflet';
 
@@ -30,7 +30,9 @@ const ChangeView = ({center, zoom, clicked, onChange}) => {
   if (center !== null) {
     return (
       <Marker key={19567} position={center} icon={redIcon}>
-        <Popup>You are here</Popup>
+        <Tooltip direction={'top'} offset={L.point(0, -36)}>
+          You are here
+        </Tooltip>
       </Marker>
     );
   } else {

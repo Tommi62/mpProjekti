@@ -5,5 +5,13 @@ const getCoordsUrl =
   'https://nominatim.openstreetmap.org/search?format=json&q=';
 const getAddressUrl =
   'https://nominatim.openstreetmap.org/reverse?format=json&';
+const placeHolder = 'https://via.placeholder.com/1280x720.png?text=Hidden+Gem';
 
-export {baseUrl, uploadsUrl, appIdentifier, getCoordsUrl, getAddressUrl};
+export {
+  baseUrl,
+  uploadsUrl,
+  appIdentifier,
+  getCoordsUrl,
+  getAddressUrl,
+  placeHolder,
+};

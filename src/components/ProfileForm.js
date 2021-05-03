@@ -29,7 +29,13 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
       if (inputs.file) {
         const fd = new FormData();
         fd.append('title', inputs.username);
-        fd.append('file', inputs.file);
+        if (inputs.file.type.includes('image')) {
+          fd.append('file', inputs.file);
+        } else {
+          throw new Error(
+            'Looks like you are trying to send something other than an image.'
+          );
+        }
         const fileResult = await postMedia(fd, localStorage.getItem('token'));
         const tagResult = await postTag(
           localStorage.getItem('token'),
@@ -38,7 +44,6 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
         );
         console.log(fileResult, tagResult);
         if (fileResult) {
-          alert(tagResult.message);
           setUpdate(true);
         }
       }
@@ -58,7 +63,7 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
         }));
       }
     } catch (e) {
-      console.log(e.message);
+      alert(e.message);
     }
   };
 
@@ -80,77 +85,68 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
   // console.log('RegisterForm', inputs);
 
   return (
-    <Grid container>
+    <Grid container justify="center" style={{marginTop: '2rem'}}>
       <Grid item xs={12}>
-        <Typography component="h1" variant="h4" gutterBottom>
+        <Typography
+          component="h1"
+          variant="h4"
+          gutterBottom
+          style={{textAlign: 'center'}}
+        >
           Update profile
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
         <ValidatorForm onSubmit={handleSubmit}>
-          <Grid container>
-            <Grid item xs={12}>
-              <TextValidator
-                fullWidth
-                type="password"
-                name="password"
-                label="Password"
-                value={inputs?.password}
-                onChange={handleInputChange}
-                validators={validators.password}
-                errorMessages={errorMessages.password}
-              />
-            </Grid>
+          <Grid container justify="center" direction="column">
+            <TextValidator
+              fullWidth
+              type="password"
+              name="password"
+              label="Password"
+              value={inputs?.password}
+              onChange={handleInputChange}
+              validators={validators.password}
+              errorMessages={errorMessages.password}
+            />
 
-            <Grid item xs={12}>
-              <TextValidator
-                fullWidth
-                type="password"
-                name="confirm"
-                label="Confirm password"
-                value={inputs?.confirm}
-                onChange={handleInputChange}
-                validators={validators.confirm}
-                errorMessages={errorMessages.confirm}
-              />
-            </Grid>
+            <TextValidator
+              fullWidth
+              type="password"
+              name="confirm"
+              label="Confirm password"
+              value={inputs?.confirm}
+              onChange={handleInputChange}
+              validators={validators.confirm}
+              errorMessages={errorMessages.confirm}
+            />
 
-            <Grid item xs={12}>
-              <TextValidator
-                fullWidth
-                type="email"
-                name="email"
-                label="Email"
-                onChange={handleInputChange}
-                value={inputs?.email}
-                validators={validators.email}
-                errorMessages={errorMessages.email}
-              />
-            </Grid>
+            <TextValidator
+              fullWidth
+              type="email"
+              name="email"
+              label="Email"
+              onChange={handleInputChange}
+              value={inputs?.email}
+              validators={validators.email}
+              errorMessages={errorMessages.email}
+            />
 
-            <Grid item xs={12}>
-              <Typography component="h4" variant="h6" gutterBottom>
-                Update profile picture
-              </Typography>
-              <TextValidator
-                fullWidth
-                type="file"
-                name="file"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-            </Grid>
+            <Typography component="h4" variant="h6" gutterBottom>
+              Update profile picture
+            </Typography>
+            <TextValidator
+              fullWidth
+              type="file"
+              name="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{marginBottom: '0.5rem'}}
+            />
 
-            <Grid item xs={12}>
-              <Button
-                fullWidth
-                color="primary"
-                type="submit"
-                variant="contained"
-              >
-                Update
-              </Button>
-            </Grid>
+            <Button color="primary" type="submit" variant="contained">
+              Update
+            </Button>
           </Grid>
         </ValidatorForm>
       </Grid>
