@@ -179,11 +179,13 @@ const AddPlaceForm = ({
       <Grid container justify="flex-end">
         <CloseButton onChange={onChange} />
       </Grid>
-      <Card style={{
-        margin: '1rem',
-        padding: '2rem 2rem',
-        position: 'relative',
-      }}>
+      <Card
+        style={{
+          margin: '1rem',
+          padding: '2rem 2rem',
+          position: 'relative',
+        }}
+      >
         <Typography component="h1" variant="h4" gutterBottom align="center">
           Add a place
         </Typography>
@@ -231,7 +233,9 @@ const AddPlaceForm = ({
                     <AddLocationIcon></AddLocationIcon>
                   </IconButton>
                 ) : (
-                  <IconButton aria-label="location" onClick={setLocation}
+                  <IconButton
+                    aria-label="location"
+                    onClick={setLocation}
                     style={{
                       position: 'absolute',
                       right: '1.5rem',
@@ -273,7 +277,9 @@ const AddPlaceForm = ({
                     <AddLocationIcon></AddLocationIcon>
                   </IconButton>
                 ) : (
-                  <IconButton aria-label="location" onClick={setLocation}
+                  <IconButton
+                    aria-label="location"
+                    onClick={setLocation}
                     style={{
                       position: 'absolute',
                       right: '1.5rem',
@@ -323,7 +329,7 @@ const AddPlaceForm = ({
               fullWidth
             >
               Lähetä
-                </Button>
+            </Button>
           </ValidatorForm>
         ) : (
           <CircularProgress />

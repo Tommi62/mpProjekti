@@ -271,7 +271,7 @@ const PlaceInfo = ({data, user, onChange}) => {
               alt="hidden gem"
               style={{
                 height: '1.8rem',
-                width: '1.8rem'
+                width: '1.8rem',
               }}
             />
           )}
