@@ -2,11 +2,13 @@
 import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
 import {useComments} from '../hooks/ApiHooks';
-import {Avatar, Button, Divider} from '@material-ui/core';
+import {Avatar, useMediaQuery} from '@material-ui/core';
 import {TextField} from '@material-ui/core';
 import PostComments from './PostComments';
 import {makeStyles} from '@material-ui/core/styles';
 import SendIcon from '@material-ui/icons/Send';
+import {IconButton} from '@material-ui/core';
+import {useTheme} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -31,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   commentButton: {
-    height: theme.spacing(4),
+    height: theme.spacing(5),
+    width: theme.spacing(5),
   },
 }));
 
@@ -40,7 +43,8 @@ const CommentSection = ({data, user, avatar}) => {
   const {postComment, getComments} = useComments();
   const token = localStorage.getItem('token');
   let username = 'default';
-  console.log('avatar ' + avatar);
+  const theme = useTheme();
+  const breakpoint = useMediaQuery(theme.breakpoints.up('sm'));
 
   if (user) {
     username = user.username;
@@ -89,36 +93,64 @@ const CommentSection = ({data, user, avatar}) => {
 
   return (
     <>
-      <PostComments comments={comments} />
-      <Divider />
-      {user && (
-        <>
-          <form onSubmit={handleSubmit} className={classes.form}>
-            <div className={classes.margin}>
-              <Avatar
-                alt={user.username}
-                src={avatar}
-                className={classes.small}
-              />
-              <TextField
-                id="input-with-icon-grid"
-                value={comment}
-                className={classes.commentInput}
-                onInput={(e) => setComment(e.target.value)}
-              />
+      <div style={{position: 'relative'}}>
+        <PostComments comments={comments} />
+        {user && (
+          <>
+            {breakpoint ? (
+              <form onSubmit={handleSubmit} className={classes.form}
+                style={{position: 'fixed', bottom: 0, left: 0, width: '400px', backgroundColor: 'white', zIndex: 1}}>
+                <div className={classes.margin}>
+                  <Avatar
+                    alt={user.username}
+                    src={avatar}
+                    className={classes.small}
+                  />
+                  <TextField
+                    id="input-with-icon-grid"
+                    value={comment}
+                    className={classes.commentInput}
+                    onInput={(e) => setComment(e.target.value)}
+                  />
+                  <IconButton aria-label="delete"
+                    type="submit"
+                    variant="contained"
+                    color="disabled"
+                    className={classes.commentButton}
+                  >
+                    <SendIcon />
+                  </IconButton>
+                </div>
+              </form>
+            ) : (
+              <form onSubmit={handleSubmit} className={classes.form}>
+                <div className={classes.margin}>
+                  <Avatar
+                    alt={user.username}
+                    src={avatar}
+                    className={classes.small}
+                  />
+                  <TextField
+                    id="input-with-icon-grid"
+                    value={comment}
+                    className={classes.commentInput}
+                    onInput={(e) => setComment(e.target.value)}
+                  />
+                  <IconButton aria-label="delete"
+                    type="submit"
+                    variant="contained"
+                    color="disabled"
+                    className={classes.commentButton}
+                  >
+                    <SendIcon />
+                  </IconButton>
+                </div>
+              </form>
+            )}
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="disabled"
-                className={classes.commentButton}
-              >
-                <SendIcon />
-              </Button>
-            </div>
-          </form>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </>
   );
 };

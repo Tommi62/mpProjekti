@@ -82,7 +82,8 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '100%',
     maxWidth: '100%',
     whiteSpace: 'pre-line',
-    border: '1px solid',
+    borderTop: '1px solid',
+    borderBottom: '1px solid',
     borderImageSlice: 1,
     borderImageSource: 'linear-gradient(to left, #ffffff, #00897b)',
   },
@@ -176,7 +177,7 @@ const PlaceInfo = ({data, user, onChange}) => {
     <>
       <Card
         className={classes.card}
-        style={breakpoint ? {marginBottom: '64px'} : {marginBottom: '0px'}}
+        style={breakpoint ? {marginBottom: '140px'} : {marginBottom: '0px'}}
       >
         {gem ? (
           <CardHeader
