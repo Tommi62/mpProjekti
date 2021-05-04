@@ -80,9 +80,9 @@ const AddPlaceForm = ({
       } else {
         console.log(
           'coords and state: ' +
-            hoverCoordinates.lat +
-            ' ' +
-            hoverCoordinates.lng
+          hoverCoordinates.lat +
+          ' ' +
+          hoverCoordinates.lng
         );
         const address = await getReverseCoordinates(
           hoverCoordinates.lat,
@@ -345,7 +345,7 @@ const AddPlaceForm = ({
               variant="contained"
               fullWidth
             >
-              Lähetä
+              Post
             </Button>
           </ValidatorForm>
         ) : (
