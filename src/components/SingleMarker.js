@@ -2,14 +2,31 @@ import PropTypes from 'prop-types';
 import * as L from 'leaflet';
 import logo from '../gem-logo2.svg';
 import gemMarker from '../gem-marker.png';
-import {Marker} from 'react-leaflet';
+import {Typography} from '@material-ui/core';
+import {Marker, Tooltip} from 'react-leaflet';
 import {useLikes} from '../hooks/ApiHooks';
 import {useEffect, useState} from 'react';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  tooltip: {
+    border: 0,
+    top: '-25px',
+    height: '15px',
+    display: 'flex',
+    alignItems: 'center',
+    transition: 'opacity 0.15s linear',
+  },
+}));
+
 
 const SingleMarker = ({onChange, item, setOpen}) => {
+  const classes = useStyles();
   const {getLikes} = useLikes();
   const [hiddenGem, setHiddenGem] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [likes, setLikes] = useState(0);
 
   const LeafIcon = L.Icon.extend({
     options: {},
@@ -51,6 +68,7 @@ const SingleMarker = ({onChange, item, setOpen}) => {
         postLikes.map((likeObject) => {
           likeCount++;
         });
+        setLikes(likeCount);
         if (likeCount >= 2) {
           setHiddenGem(true);
         } else {
@@ -76,7 +94,19 @@ const SingleMarker = ({onChange, item, setOpen}) => {
               handleChange(item);
             },
           }}
-        />
+        >
+          <Tooltip>
+            <Typography
+              component="p"
+              variant="h6"
+              align="center"
+              color="disabled"
+            >
+              {likes}
+            </Typography>
+            <FavoriteIcon color="disabled" />
+          </Tooltip>
+        </Marker>
       ) : (
         <Marker
           icon={greyIcon}
@@ -89,7 +119,18 @@ const SingleMarker = ({onChange, item, setOpen}) => {
               handleChange(item);
             },
           }}
-        />
+        ><Tooltip className={classes.tooltip} offset={L.point(15, 0)}>
+            <Typography
+              component="p"
+              variant="h6"
+              align="center"
+              color="disabled"
+            >
+              {likes}
+            </Typography>
+            <FavoriteIcon color="disabled" />
+          </Tooltip>
+        </Marker>
       )}
     </>
   );

@@ -139,6 +139,7 @@ const Nav = () => {
             to="/"
             className={classes.logo}
             color="inherit"
+            style={{textDecoration: 'none'}}
           >
             <img
               style={{height: '4rem', width: '4rem', marginRight: '14px'}}

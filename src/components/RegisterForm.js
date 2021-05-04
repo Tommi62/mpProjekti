@@ -3,7 +3,6 @@
 import useForm from '../hooks/FormHooks';
 import {useUsers} from '../hooks/ApiHooks';
 import {Grid, Typography, Button} from '@material-ui/core';
-// import {useState} from 'react';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
 import PropTypes from 'prop-types';
@@ -15,7 +14,6 @@ const RegisterForm = ({setToggle}) => {
     password: ['required', 'minStringLength:5'],
     confirm: ['required', 'isPasswordMatch'],
     email: ['required', 'isEmail'],
-    // eslint-disable-next-line max-len
   };
 
   const errorMessages = {
@@ -70,18 +68,22 @@ const RegisterForm = ({setToggle}) => {
     );
   }, [inputs]);
 
-  // console.log('RegisterForm', inputs);
-
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
         <Typography component="h1" variant="h2" gutterBottom>
           Register
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} container direction="column" alignItems="center">
         <ValidatorForm onSubmit={handleSubmit}>
-          <Grid container>
+          <Grid container direction="column">
             <Grid container item>
               <TextValidator
                 fullWidth

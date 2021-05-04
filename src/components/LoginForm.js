@@ -31,12 +31,24 @@ const LoginForm = ({history}) => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
         <Typography component="h1" variant="h2" gutterBottom>
           Login
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
         <form onSubmit={handleSubmit}>
           <Grid container>
             <Grid container item>

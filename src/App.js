@@ -17,7 +17,7 @@ import {useTheme} from '@material-ui/core/styles';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: teal[600],
+      main: teal[400],
     },
     secondary: {
       main: red[800],
@@ -42,14 +42,13 @@ const App = () => {
               margin: 0,
               padding: 0,
               height: heightCorrected,
-              overflow: 'hidden',
             }}
           >
             <Nav />
             <main
               style={
                 breakpoint
-                  ? {marginTop: 65, height: '100%'}
+                  ? {marginTop: 64, height: '100%'}
                   : {marginTop: 56, height: '100%'}
               }
             >

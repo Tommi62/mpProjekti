@@ -55,11 +55,14 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
     paddingTop: '64px',
+    border: 0,
+    borderRadius: 0,
   },
   drawerPaperSmall: {
     paddingTop: '0',
     position: 'absolute',
     top: '50%',
+    border: 0,
   },
   drawerHeader: {
     display: 'flex',
@@ -212,13 +215,14 @@ const Home = () => {
             />
           </SliderButton>
           <Drawer
-            className={classes.drawser}
+            className={classes.drawer}
             variant="persistent"
             anchor="left"
             open={open}
             classes={{
               paper: classes.drawerPaper,
             }}
+            PaperProps={{elevation: 0, square: false}}
           >
             {placeInfo ? (
               <>
@@ -265,6 +269,7 @@ const Home = () => {
             classes={{
               paper: classes.drawerPaperSmall,
             }}
+            PaperProps={{elevation: 0, square: false}}
           >
             {placeInfo ? (
               <>
