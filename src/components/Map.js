@@ -89,8 +89,8 @@ const Map = ({
   return (
     <>
       <MapContainer
-        center={[60.171831, 24.9412]}
-        zoom={15}
+        center={[63.371831, 23.1412]}
+        zoom={6}
         scrollWheelZoom={true}
         style={{height: '100%', width: '100%', position: 'fixed'}}
         zoomControl={false}

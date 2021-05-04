@@ -233,7 +233,7 @@ const ProfileModal = ({post, history, gem, multiplier, likes}) => {
                           post.file_id,
                           localStorage.getItem('token')
                         );
-                        // history.push('/profile'); ???
+                        history.push('/');
                       }
                     } catch (e) {
                       console.log(e.message);

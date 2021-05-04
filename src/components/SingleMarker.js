@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const SingleMarker = ({onChange, item, setOpen}) => {
   const classes = useStyles();
   const {getLikes} = useLikes();
@@ -133,7 +132,8 @@ const SingleMarker = ({onChange, item, setOpen}) => {
               }
             },
           }}
-        ><Tooltip className={classes.tooltip} offset={L.point(15, 0)}>
+        >
+          <Tooltip className={classes.tooltip} offset={L.point(15, 0)}>
             <Typography
               component="p"
               variant="h6"
