@@ -345,7 +345,7 @@ const AddPlaceForm = ({
               variant="contained"
               fullWidth
             >
-              Lähetä
+              Post
             </Button>
           </ValidatorForm>
         ) : (
