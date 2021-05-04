@@ -93,6 +93,13 @@ const SingleMarker = ({onChange, item, setOpen}) => {
             click: () => {
               handleChange(item);
             },
+            mouseover: () => {
+              if (update) {
+                setUpdate(false);
+              } else {
+                setUpdate(true);
+              }
+            },
           }}
         >
           <Tooltip>
@@ -117,6 +124,13 @@ const SingleMarker = ({onChange, item, setOpen}) => {
           eventHandlers={{
             click: () => {
               handleChange(item);
+            },
+            mouseover: () => {
+              if (update) {
+                setUpdate(false);
+              } else {
+                setUpdate(true);
+              }
             },
           }}
         ><Tooltip className={classes.tooltip} offset={L.point(15, 0)}>
