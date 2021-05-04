@@ -42,7 +42,6 @@ const App = () => {
               margin: 0,
               padding: 0,
               height: heightCorrected,
-              overflow: 'hidden',
             }}
           >
             <Nav />
