@@ -55,7 +55,6 @@ const Profile = () => {
         <Grid container justify="center">
           <Card
             style={{
-              width: '30%',
               display: 'flex',
               justifyContent: 'center',
             }}

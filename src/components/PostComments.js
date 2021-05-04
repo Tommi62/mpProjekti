@@ -23,14 +23,17 @@ const PostComments = ({comments}) => {
       ))}{' '}
       {comments == '' && (
         <ListItem alignItems="flex-start" color="textSecondary">
-          <Typography variant="body2" color="textSecondary" component="p"
-            style={{margin: '0 0 3rem 0'}}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            style={{margin: '0 0 3rem 0'}}
+          >
             no comments...
           </Typography>
         </ListItem>
-      )
-      }
-    </List >
+      )}
+    </List>
   );
 };
 

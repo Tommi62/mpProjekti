@@ -98,8 +98,18 @@ const CommentSection = ({data, user, avatar}) => {
         {user && (
           <>
             {breakpoint ? (
-              <form onSubmit={handleSubmit} className={classes.form}
-                style={{position: 'fixed', bottom: 0, left: 0, width: '400px', backgroundColor: 'white', zIndex: 1}}>
+              <form
+                onSubmit={handleSubmit}
+                className={classes.form}
+                style={{
+                  position: 'fixed',
+                  bottom: 0,
+                  left: 0,
+                  width: '400px',
+                  backgroundColor: 'white',
+                  zIndex: 1,
+                }}
+              >
                 <div className={classes.margin}>
                   <Avatar
                     alt={user.username}
@@ -112,7 +122,8 @@ const CommentSection = ({data, user, avatar}) => {
                     className={classes.commentInput}
                     onInput={(e) => setComment(e.target.value)}
                   />
-                  <IconButton aria-label="delete"
+                  <IconButton
+                    aria-label="delete"
                     type="submit"
                     variant="contained"
                     color="disabled"
@@ -136,7 +147,8 @@ const CommentSection = ({data, user, avatar}) => {
                     className={classes.commentInput}
                     onInput={(e) => setComment(e.target.value)}
                   />
-                  <IconButton aria-label="delete"
+                  <IconButton
+                    aria-label="delete"
                     type="submit"
                     variant="contained"
                     color="disabled"
@@ -147,7 +159,6 @@ const CommentSection = ({data, user, avatar}) => {
                 </div>
               </form>
             )}
-
           </>
         )}
       </div>
