@@ -1,6 +1,6 @@
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import {Button} from '@material-ui/core';
+import {Button, Grid} from '@material-ui/core';
 import {useState} from 'react';
 
 const Login = () => {
@@ -13,7 +13,10 @@ const Login = () => {
   return (
     <>
       {toggle ? <LoginForm /> : <RegisterForm setToggle={setToggle} />}
-      <Button onClick={showHide}>{toggle ? 'or register' : 'or login'}</Button>
+      <Grid container justify="center">
+        <Button justify='center'
+          onClick={showHide}>{toggle ? 'or register' : 'or login'}</Button>
+      </Grid>
     </>
   );
 };

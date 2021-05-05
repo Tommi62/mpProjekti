@@ -50,7 +50,7 @@ const LoginForm = ({history}) => {
         justify="center"
       >
         <form onSubmit={handleSubmit}>
-          <Grid container>
+          <Grid container direction="column">
             <Grid container item>
               <TextField
                 fullWidth
@@ -75,6 +75,7 @@ const LoginForm = ({history}) => {
             <Grid container item>
               <Button
                 fullWidth
+                style={{marginTop: '2rem', marginBottom: '0.5rem'}}
                 color="primary"
                 type="submit"
                 variant="contained"

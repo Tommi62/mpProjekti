@@ -138,6 +138,7 @@ const RegisterForm = ({setToggle}) => {
 
             <Grid container item>
               <Button
+                style={{marginTop: '2rem', marginBottom: '0.5rem'}}
                 fullWidth
                 color="primary"
                 type="submit"
