@@ -201,6 +201,7 @@ const AddPlaceForm = ({
           margin: '1rem',
           padding: '2rem 2rem',
           position: 'relative',
+          marginBottom: '100px',
         }}
       >
         <Typography component="h1" variant="h4" gutterBottom align="center">
