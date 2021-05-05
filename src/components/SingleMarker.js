@@ -26,6 +26,7 @@ const SingleMarker = ({onChange, item, setOpen}) => {
   const [hiddenGem, setHiddenGem] = useState(false);
   const [update, setUpdate] = useState(false);
   const [likes, setLikes] = useState(0);
+  const lowerLimit = 5;
 
   const LeafIcon = L.Icon.extend({
     options: {},
@@ -68,7 +69,7 @@ const SingleMarker = ({onChange, item, setOpen}) => {
           likeCount++;
         });
         setLikes(likeCount);
-        if (likeCount >= 2) {
+        if (likeCount >= lowerLimit) {
           setHiddenGem(true);
         } else {
           setHiddenGem(false);

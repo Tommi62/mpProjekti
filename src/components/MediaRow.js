@@ -12,6 +12,7 @@ const MediaRow = ({file, ownFiles, user}) => {
   const [gem, setGem] = useState(false);
   const [multiplier, setMultiplier] = useState('');
   const [likes, setLikes] = useState(0);
+  const lowerLimit = 5;
 
   let desc = {}; // jos kuva tallennettu ennen week4C, description ei ole JSONia
   try {
@@ -30,10 +31,10 @@ const MediaRow = ({file, ownFiles, user}) => {
           likeCount++;
         });
         setLikes(likeCount);
-        if (likeCount >= 2) {
+        if (likeCount >= lowerLimit) {
           setGem(true);
-          if (likeCount / 2 >= 2) {
-            setMultiplier(Math.floor(likeCount / 2));
+          if (likeCount / lowerLimit >= 2) {
+            setMultiplier(Math.floor(likeCount / lowerLimit));
           } else {
             setMultiplier('');
           }
