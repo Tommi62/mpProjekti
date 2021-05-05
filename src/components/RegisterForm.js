@@ -69,7 +69,7 @@ const RegisterForm = ({setToggle}) => {
   }, [inputs]);
 
   return (
-    <Grid container>
+    <Grid container alignItems="center">
       <Grid
         container
         spacing={0}
