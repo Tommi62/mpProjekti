@@ -28,7 +28,8 @@ const StartInfo = ({user, onChange}) => {
                 style={{margin: '1rem'}}
               >
                 You can check out information of Hidden gem places other people
-                have added by clicking the markers. If you want to add your own
+                have added by clicking the markers. Places that have a gem
+                marker have received a lot of likes. If you want to add your own
                 Hidden gem place click the button below.
               </Typography>
               <Button
@@ -65,7 +66,8 @@ const StartInfo = ({user, onChange}) => {
                 style={{margin: '1rem'}}
               >
                 You can check out information of Hidden gem places other people
-                have added by clicking the markers. If you want to add your own
+                have added by clicking the markers. Places that have a gem
+                marker have received a lot of likes. If you want to add your own
                 Hidden gem place, please login.
               </Typography>
             </Grid>

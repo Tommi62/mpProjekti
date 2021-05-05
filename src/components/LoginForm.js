@@ -53,7 +53,6 @@ const LoginForm = ({history}) => {
           <Grid container direction="column">
             <Grid container item>
               <TextField
-                fullWidth
                 type="text"
                 name="username"
                 label="Username"
@@ -63,7 +62,6 @@ const LoginForm = ({history}) => {
             </Grid>
             <Grid container item>
               <TextField
-                fullWidth
                 type="password"
                 name="password"
                 label="Password"

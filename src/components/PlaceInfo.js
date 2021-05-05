@@ -107,6 +107,7 @@ const PlaceInfo = ({data, user, onChange}) => {
   const {getLikes} = useLikes();
   const theme = useTheme();
   const breakpoint = useMediaQuery(theme.breakpoints.up('sm'));
+  const lowerLimit = 5;
 
   useEffect(() => {
     (async () => {
@@ -148,10 +149,10 @@ const PlaceInfo = ({data, user, onChange}) => {
         postLikes.map((likeObject) => {
           likeCount++;
         });
-        if (likeCount >= 2) {
+        if (likeCount >= lowerLimit) {
           setGem(true);
-          if (likeCount / 2 >= 2) {
-            setMultiplier(Math.floor(likeCount / 2));
+          if (likeCount / lowerLimit >= 2) {
+            setMultiplier(Math.floor(likeCount / lowerLimit));
           } else {
             setMultiplier('');
           }
