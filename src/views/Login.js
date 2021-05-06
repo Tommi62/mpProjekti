@@ -14,15 +14,18 @@ const Login = () => {
   return (
     <>
       <Grid container justify="center">
-        <Card style={{
-          margin: '5rem 2rem 3rem 2rem',
-          padding: '3rem',
-          maxWidth: '18rem',
-        }}>
+        <Card
+          style={{
+            margin: '5rem 2rem 3rem 2rem',
+            padding: '3rem',
+            maxWidth: '18rem',
+          }}
+        >
           {toggle ? <LoginForm /> : <RegisterForm setToggle={setToggle} />}
           <Grid container justify="center">
-            <Button justify='center'
-              onClick={showHide}>{toggle ? 'or register' : 'or login'}</Button>
+            <Button justify="center" onClick={showHide}>
+              {toggle ? 'or register' : 'or login'}
+            </Button>
           </Grid>
         </Card>
       </Grid>
