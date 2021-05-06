@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
 import {useComments} from '../hooks/ApiHooks';
@@ -53,7 +52,6 @@ const CommentSection = ({data, user, avatar}) => {
   let id = null;
   try {
     id = data.file_id;
-    console.log('file_id: ' + id);
   } catch (e) {
     console.log('file_id error: ' + id);
   }
@@ -78,14 +76,12 @@ const CommentSection = ({data, user, avatar}) => {
       comment: comment,
       username: username,
     });
-    console.log('commenting post ' + commentObject);
     await postComment(token, id, commentObject);
     parseComments(id);
     setComment('');
   };
 
   useEffect(() => {
-    console.log('comments useeffect');
     if (!(data.file_id === '')) {
       parseComments(id);
     }

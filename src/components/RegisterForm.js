@@ -17,17 +17,19 @@ const RegisterForm = ({setToggle}) => {
   };
 
   const errorMessages = {
-    username: ['vaadittu kenttä', 'vähintään 3 merkkiä', 'tunnus ei oo vapaa'],
-    password: ['vaadittu kenttä', 'vähintään 5 merkkiä'],
-    confirm: ['vaadittu kenttä', 'salasanat eivät täsmää'],
-    email: ['vaadittu kenttä', 'sähköposti väärää muotoa'],
+    username: [
+      'Required field',
+      'Minimum of 3 characters',
+      'Username is not available',
+    ],
+    password: ['Required field', 'Minimum of 5 characters'],
+    confirm: ['Required field', 'Passwords do not match'],
+    email: ['Required field', 'Email is not recognized'],
   };
 
   const doRegister = async () => {
     try {
-      console.log('rekisteröinti lomake lähtee');
       const available = await getUserAvailable(inputs.username);
-      console.log('availabale', available);
       if (available) {
         delete inputs.confirm;
         const result = await register(inputs);
@@ -53,7 +55,6 @@ const RegisterForm = ({setToggle}) => {
       if (value.length > 2) {
         try {
           const available = await getUserAvailable(value);
-          console.log('onk vapaana', available);
           return available;
         } catch (e) {
           console.log(e.message);

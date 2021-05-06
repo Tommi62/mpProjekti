@@ -35,8 +35,6 @@ const MediaTable = ({ownFiles, user}) => {
   const matches = useMediaQuery('(min-width:697px)');
   const {picArray, loading, deleteMedia} = useMedia(true, ownFiles);
 
-  console.log('MediaTable', picArray);
-
   return (
     <div className={classes.root}>
       <GridList

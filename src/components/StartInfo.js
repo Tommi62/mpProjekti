@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const StartInfo = ({user, onChange}) => {
   const handleChange = () => {
-    console.log('HandleChange');
     onChange(true);
   };
 

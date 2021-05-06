@@ -2,7 +2,6 @@
 /* eslint-disable indent */
 import {useMedia, useTag, useUsers} from '../hooks/ApiHooks';
 import {Grid, Typography, Button} from '@material-ui/core';
-// import {useState} from 'react';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
 import PropTypes from 'prop-types';
@@ -25,7 +24,6 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
 
   const doRegister = async () => {
     try {
-      console.log('user muokkaus lomake lähtee');
       if (inputs.file) {
         const fd = new FormData();
         fd.append('title', inputs.username);
@@ -50,7 +48,6 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
       delete inputs.confirm;
       delete inputs.file;
       const result = await putUser(inputs, localStorage.getItem('token'));
-      console.log('doUpload', result);
       if (result) {
         alert(result.message);
         const userData = await getUser(localStorage.getItem('token'));
@@ -81,8 +78,6 @@ const ProfileForm = ({user, setUser, setUpdate}) => {
       (value) => value === inputs.password
     );
   }, [inputs]);
-
-  // console.log('RegisterForm', inputs);
 
   return (
     <Grid container justify="center" style={{marginTop: '2rem'}}>

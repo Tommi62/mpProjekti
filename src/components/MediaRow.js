@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
 import {GridListTileBar} from '@material-ui/core';
@@ -17,7 +16,6 @@ const MediaRow = ({file, ownFiles, user}) => {
   let desc = {}; // jos kuva tallennettu ennen week4C, description ei ole JSONia
   try {
     desc = JSON.parse(file.description);
-    console.log(desc);
   } catch (e) {
     desc = {description: file.description};
   }

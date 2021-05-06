@@ -142,7 +142,6 @@ const useMedia = (update = false, ownFiles) => {
     try {
       setLoading(true);
       const files = await doFetch(baseUrl + 'tags/' + appIdentifier);
-      // console.log(files);
       let allFiles = await Promise.all(
         files.map(async (item) => {
           return await doFetch(baseUrl + 'media/' + item.file_id);
@@ -346,7 +345,6 @@ const useComments = () => {
 
   const getComments = async (id) => {
     try {
-      console.log('getComments id: ' + id);
       return await doFetch(baseUrl + 'comments/file/' + id);
     } catch (e) {
       console.log('getting comments failed');

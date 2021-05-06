@@ -32,7 +32,6 @@ const Comment = ({comment}) => {
   let commentObject = {};
   try {
     commentObject = JSON.parse(comment.comment);
-    console.log('desc1' + commentObject.username);
   } catch (e) {
     commentObject = {
       username: 'default',

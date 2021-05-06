@@ -33,7 +33,6 @@ const LocationButton = ({setInitialPosition, setClicked}) => {
         setClicked(true);
       });
     } catch (error) {
-      console.log(error.message);
       alert('We did not find you.');
     }
   };
