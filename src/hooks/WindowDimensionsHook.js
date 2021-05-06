@@ -1,4 +1,3 @@
-/* eslint-disable comma-dangle */
 /* eslint-disable indent */
 /* eslint-disable require-jsdoc */
 import {useState, useEffect} from 'react';
@@ -13,7 +12,7 @@ const getWindowDimensions = () => {
 
 export default function useWindowDimensions() {
   const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
+    getWindowDimensions(),
   );
 
   useEffect(() => {

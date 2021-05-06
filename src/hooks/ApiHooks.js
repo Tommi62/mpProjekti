@@ -1,4 +1,3 @@
-/* eslint-disable comma-dangle */
 /* eslint-disable indent */
 /* eslint-disable max-len */
 import {useContext, useEffect, useState} from 'react';
@@ -142,11 +141,10 @@ const useMedia = (update = false, ownFiles) => {
     try {
       setLoading(true);
       const files = await doFetch(baseUrl + 'tags/' + appIdentifier);
-      // console.log(files);
       let allFiles = await Promise.all(
         files.map(async (item) => {
           return await doFetch(baseUrl + 'media/' + item.file_id);
-        })
+        }),
       );
       if (ownFiles && user !== null) {
         allFiles = allFiles.filter((item) => {
@@ -346,7 +344,6 @@ const useComments = () => {
 
   const getComments = async (id) => {
     try {
-      console.log('getComments id: ' + id);
       return await doFetch(baseUrl + 'comments/file/' + id);
     } catch (e) {
       console.log('getting comments failed');
@@ -368,7 +365,7 @@ const useCoordinates = () => {
   const getReverseCoordinates = async (lat, lon) => {
     try {
       const response = await doFetch(
-        getAddressUrl + 'lat=' + lat + '&lon=' + lon
+        getAddressUrl + 'lat=' + lat + '&lon=' + lon,
       );
       return response;
     } catch (e) {

@@ -13,7 +13,6 @@ const LoginForm = ({history}) => {
   const doLogin = async () => {
     try {
       const userdata = await postLogin(inputs);
-      console.log('userdata', userdata);
       localStorage.setItem('token', userdata.token);
       setUser(userdata.user);
       history.push('/');

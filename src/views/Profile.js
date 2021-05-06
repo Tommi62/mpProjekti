@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 import MediaTable from '../components/MediaTable';
@@ -42,8 +41,6 @@ const Profile = () => {
       }
     })();
   }, [user, update]);
-
-  console.log(avatar);
 
   return (
     <>

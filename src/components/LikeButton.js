@@ -1,6 +1,4 @@
-/* eslint-disable comma-dangle */
 /* eslint-disable indent */
-/* eslint-disable max-len */
 import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
 import {useLikes} from '../hooks/ApiHooks';

@@ -1,4 +1,3 @@
-/* eslint-disable comma-dangle */
 /* eslint-disable indent */
 import {useCoordinates, useMedia, useTag, useUsers} from '../hooks/ApiHooks';
 import {CircularProgress, Button, Grid, Typography} from '@material-ui/core';
@@ -35,10 +34,10 @@ const AddPlaceForm = ({
   };
 
   const errorMessages = {
-    title: ['Vaadittu kenttä!', 'Vähintään kolme merkkiä!'],
-    description: ['vähintään 5 merkkiä'],
-    address: ['Vaadittu kenttä!', 'Vähintään kolme merkkiä!'],
-    city: ['Vaadittu kenttä!', 'Vähintään kolme merkkiä!'],
+    title: ['Required field!', 'Minimum of 3 characters'],
+    description: ['Minimum of 5 characters'],
+    address: ['Required field!', 'Minimum of 3 characters'],
+    city: ['Required field!', 'Minimum of 3 characters'],
   };
 
   useEffect(() => {
@@ -67,7 +66,6 @@ const AddPlaceForm = ({
         if (coords === undefined || coords.length == 0) {
           throw new Error('Address not found');
         }
-        console.log('Coords', coords[0].lat);
         fd.append('title', inputs.title);
         desc = {
           description: inputs.description,
@@ -78,20 +76,13 @@ const AddPlaceForm = ({
           username: user.username,
         };
       } else {
-        console.log(
-          'coords and state: ' +
-          hoverCoordinates.lat +
-          ' ' +
-          hoverCoordinates.lng
-        );
         const address = await getReverseCoordinates(
           hoverCoordinates.lat,
-          hoverCoordinates.lng
+          hoverCoordinates.lng,
         );
         if (address === undefined || address.length == 0) {
           throw new Error('Coords not found');
         }
-        console.log('Coords', address);
         fd.append('title', inputs.title);
         desc = {
           description: inputs.description,
@@ -108,7 +99,7 @@ const AddPlaceForm = ({
           fd.append('file', inputs.file);
         } else {
           throw new Error(
-            'Looks like you are trying to send something other than an image.'
+            'Looks like you are trying to send something other than an image.',
           );
         }
       } else {
@@ -118,10 +109,9 @@ const AddPlaceForm = ({
       const result = await postMedia(fd, localStorage.getItem('token'));
       const tagResult = await postTag(
         localStorage.getItem('token'),
-        result.file_id
+        result.file_id,
       );
       console.log('doUpload', result, tagResult);
-      console.log('desc', desc);
       handleChange();
       setDropped(true);
       setVisible(false);

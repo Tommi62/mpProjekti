@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 import {useMedia} from '../hooks/ApiHooks';
 import PropTypes from 'prop-types';
 import SingleMarker from './SingleMarker';

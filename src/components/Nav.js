@@ -106,7 +106,7 @@ const Nav = () => {
         const userData = await getUser(token);
         setUser(userData);
       } catch (e) {
-        // console.log('logged out.');
+        console.log('logged out.');
       }
     };
 

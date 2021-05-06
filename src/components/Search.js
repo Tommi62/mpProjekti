@@ -1,5 +1,3 @@
-/* eslint-disable new-cap */
-/* eslint-disable require-jsdoc */
 import {useEffect} from 'react';
 import {useMap} from 'react-leaflet';
 import {GeoSearchControl} from 'leaflet-geosearch';

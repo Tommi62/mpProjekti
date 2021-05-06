@@ -1,4 +1,3 @@
-/* eslint-disable comma-dangle */
 /* eslint-disable indent */
 import MediaRow from './MediaRow';
 import {useMedia} from '../hooks/ApiHooks';
@@ -35,8 +34,6 @@ const MediaTable = ({ownFiles, user}) => {
   const matches = useMediaQuery('(min-width:697px)');
   const {picArray, loading, deleteMedia} = useMedia(true, ownFiles);
 
-  console.log('MediaTable', picArray);
-
   return (
     <div className={classes.root}>
       <GridList
@@ -59,7 +56,7 @@ const MediaTable = ({ownFiles, user}) => {
                     user={user}
                   />
                 </GridListTile>
-              )
+              ),
           )
         ) : (
           <GridListTile>

@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import {List, ListItem} from '@material-ui/core';
 import {PropTypes} from 'prop-types';
 import Comment from './Comment';
@@ -15,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PostComments = ({comments}) => {
   const classes = useStyles();
-  console.log('kommentit: ' + comments);
   return (
     <List className={classes.list}>
       {comments.map((item) => (

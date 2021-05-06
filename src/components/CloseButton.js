@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 const CloseButton = ({onChange, whiteIcon}) => {
   const handleChange = () => {
-    console.log('Clicked');
     onChange(false);
   };
 

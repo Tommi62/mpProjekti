@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   Box,
   Card,
@@ -9,8 +8,6 @@ import {
   Typography,
   useMediaQuery,
 } from '@material-ui/core';
-/* eslint-disable comma-dangle */
-/* eslint-disable indent */
 import {Avatar} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
